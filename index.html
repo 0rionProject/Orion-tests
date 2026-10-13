@@ -1,198 +1,1327 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d1b">
+  <meta name="description" content="Orion accompagne les créateurs et entrepreneurs dans leurs projets numériques.">
   <title>Orion — Chase Your Dreams</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    :root {
+      --bg: #080d1b;
+      --panel: #101a2e;
+      --panel-light: #14223b;
+      --text: #f2f7ff;
+      --muted: #a7b5cb;
+      --blue: #69baff;
+      --cyan: #35e0d0;
+      --border: rgba(151, 190, 232, .17);
+      --gradient: linear-gradient(110deg, #75baff, #35e0d0);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 80% 5%, rgba(32, 111, 180, .14), transparent 36%),
+        radial-gradient(ellipse at 10% 45%, rgba(32, 209, 198, .07), transparent 35%),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select {
+      font: inherit;
+    }
+
+    button, a, select, input {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 16px 7%;
+      background: rgba(8, 13, 27, .88);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      line-height: 1.25;
+    }
+
+    .brand-name {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: -.06em;
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .brand-tagline {
+      color: var(--muted);
+      font-size: .72rem;
+      letter-spacing: .04em;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .nav a {
+      color: var(--muted);
+      font-size: .9rem;
+      transition: color .2s;
+    }
+
+    .nav a:hover {
+      color: var(--cyan);
+    }
+
+    .nav .nav-cta {
+      padding: 9px 16px;
+      border-radius: 12px;
+      color: #06121c;
+      background: var(--gradient);
+      font-weight: 800;
+    }
+
+    .page {
+      display: none;
+      animation: fadeIn .35s ease;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 40px;
+      min-height: 650px;
+      padding: 85px 9%;
+      overflow: hidden;
+    }
+
+    .eyebrow {
+      margin-bottom: 14px;
+      color: var(--cyan);
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+    }
+
+    h1 {
+      max-width: 760px;
+      font-size: clamp(2.8rem, 6vw, 5.3rem);
+      line-height: 1.07;
+      letter-spacing: -.055em;
+    }
+
+    .gradient-text {
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-description {
+      max-width: 610px;
+      margin-top: 25px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 47px;
+      padding: 12px 20px;
+      border: 1px solid transparent;
+      border-radius: 13px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: transform .2s, filter .2s, border-color .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.08);
+    }
+
+    .button-primary {
+      color: #06121c;
+      background: var(--gradient);
+    }
+
+    .button-secondary {
+      color: var(--text);
+      border-color: var(--border);
+      background: rgba(255, 255, 255, .03);
+    }
+
+    .hero-note {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+    }
+
+    .hero-visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 360px;
+    }
+
+    .orbit {
+      position: absolute;
+      width: min(100%, 360px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(105, 186, 255, .3);
+      border-radius: 50%;
+      transform: rotate(-25deg) scaleY(.58);
+    }
+
+    .orbit-two {
+      width: min(85%, 310px);
+      border-color: rgba(53, 224, 208, .35);
+      transform: rotate(45deg) scaleY(.58);
+    }
+
+    .planet {
+      display: grid;
+      place-items: center;
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 30% 25%, #c0f7ff, transparent 23%),
+        linear-gradient(135deg, #418ff4, #24cfc7 75%, #122c5e);
+      box-shadow: 0 0 80px rgba(68, 177, 245, .27);
+      font-size: 3rem;
+    }
+
+    .planet span {
+      color: white;
+      text-shadow: 0 0 20px white;
+    }
+
+    .hero-orion {
+      position: absolute;
+      bottom: 5px;
+      color: rgba(190, 220, 255, .6);
+      font-size: .8rem;
+      font-weight: 900;
+      letter-spacing: .55em;
+    }
+
+    .star {
+      position: absolute;
+      color: var(--cyan);
+      text-shadow: 0 0 14px var(--cyan);
+    }
+
+    .star-one { top: 13%; left: 20%; }
+    .star-two { top: 25%; right: 12%; font-size: 1.7rem; }
+    .star-three { bottom: 23%; left: 12%; }
+    .star-four { bottom: 18%; right: 19%; font-size: 1.8rem; }
+
+    .section {
+      padding: 90px 9%;
+    }
+
+    .section-heading {
+      max-width: 760px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .section-heading h2,
+    .final-cta h2 {
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1.2;
+      letter-spacing: -.04em;
+    }
+
+    .section-heading > p:last-child,
+    .final-cta > p:not(.eyebrow) {
+      margin-top: 14px;
+      color: var(--muted);
+    }
+
+    .presentation-card {
+      display: grid;
+      grid-template-columns: 85px 1fr;
+      gap: 25px;
+      max-width: 1000px;
+      margin: auto;
+      padding: 35px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(20, 34, 59, .95), rgba(11, 19, 36, .9));
+    }
+
+    .presentation-icon {
+      display: grid;
+      place-items: center;
+      width: 75px;
+      height: 75px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: rgba(105, 186, 255, .08);
+      font-size: 2rem;
+    }
+
+    .presentation-card h3 {
+      margin-bottom: 14px;
+      font-size: 1.5rem;
+    }
+
+    .presentation-card p {
+      margin-top: 12px;
+      color: var(--muted);
+    }
+
+    .signature {
+      color: var(--cyan) !important;
+      font-weight: 800;
+    }
+
+    .service-grid,
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .service-card,
+    .social-card {
+      position: relative;
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: rgba(16, 26, 46, .82);
+      transition: transform .2s, border-color .2s, background .2s;
+    }
+
+    .service-card:hover,
+    .social-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(53, 224, 208, .5);
+      background: var(--panel-light);
+    }
+
+    .service-icon,
+    .social-icon {
+      display: block;
+      margin-bottom: 13px;
+      font-size: 1.9rem;
+    }
+
+    .service-card h3,
+    .social-name {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    .service-card p,
+    .social-description {
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .text-link {
+      display: inline-block;
+      margin-top: 16px;
+      color: var(--cyan);
+      font-weight: 800;
+    }
+
+    .center-action {
+      margin-top: 35px;
+      text-align: center;
+    }
+
+    .social-card {
+      display: block;
+      min-height: 175px;
+    }
+
+    .social-arrow {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: var(--cyan);
+      font-size: 1.2rem;
+    }
+
+    .social-disabled {
+      cursor: default;
+      opacity: .8;
+    }
+
+    .coming-soon {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 3px 9px;
+      border-radius: 30px;
+      background: rgba(105, 186, 255, .12);
+      color: var(--blue);
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .final-cta {
+      margin: 25px 9% 90px;
+      padding: 55px 25px;
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(53, 224, 208, .12), transparent 65%),
+        var(--panel);
+      text-align: center;
+    }
+
+    .final-cta .button {
+      margin-top: 25px;
+    }
+
+    .footer {
+      padding: 35px 20px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .footer-brand {
+      color: var(--text);
+      font-size: 1.5rem;
+      font-weight: 900;
+    }
+
+    .footer-brand span {
+      margin-left: 5px;
+    }
+
+    .copyright {
+      margin-top: 12px;
+      font-size: .8rem;
+    }
+
+    /* PAGE COMMANDE */
+
+    .order-page {
+      max-width: 1000px;
+      min-height: 75vh;
+      margin: auto;
+      padding: 65px 25px 90px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: var(--cyan);
+      font-weight: 700;
+    }
+
+    .order-intro {
+      margin-bottom: 35px;
+    }
+
+    .order-intro h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+    }
+
+    .order-intro p {
+      max-width: 700px;
+      margin-top: 15px;
+      color: var(--muted);
+    }
+
+    .order-layout {
+      display: grid;
+      grid-template-columns: 1fr 310px;
+      align-items: start;
+      gap: 22px;
+    }
+
+    .options-panel,
+    .summary-panel {
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      background: rgba(16, 26, 46, .88);
+    }
+
+    .options-panel h2,
+    .summary-panel h2 {
+      margin-bottom: 20px;
+      font-size: 1.25rem;
+    }
+
+    .option-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .option-row:last-child {
+      border-bottom: 0;
+    }
+
+    .option-info {
+      flex: 1;
+    }
+
+    .option-info strong {
+      display: block;
+    }
+
+    .option-info small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+    }
+
+    .price {
+      color: var(--cyan);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .stepper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .stepper button {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel-light);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    .stepper button:hover {
+      border-color: var(--cyan);
+    }
+
+    .stepper output {
+      min-width: 20px;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .domain-select {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .checkbox-row:last-child {
+      border-bottom: 0;
+    }
+
+    .checkbox-row input {
+      width: 18px;
+      height: 18px;
+      margin-top: 5px;
+      accent-color: var(--cyan);
+      flex-shrink: 0;
+    }
+
+    .checkbox-row span {
+      flex: 1;
+    }
+
+    .summary-panel {
+      position: sticky;
+      top: 110px;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .summary-line span:last-child {
+      color: var(--text);
+      text-align: right;
+    }
+
+    .summary-total {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 15px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .summary-total strong {
+      font-size: 1.8rem;
+      background: var(--gradient);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .summary-note {
+      margin: 15px 0 20px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .summary-panel .button {
+      width: 100%;
+    }
+
+    .notice {
+      display: none;
+      margin-top: 18px;
+      padding: 14px;
+      border: 1px solid rgba(53, 224, 208, .35);
+      border-radius: 12px;
+      background: rgba(53, 224, 208, .07);
+      color: var(--text);
+      font-size: .9rem;
+    }
+
+    .notice.show {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav {
+        justify-content: flex-start;
+        gap: 13px;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 65px;
+      }
+
+      .hero-visual {
+        min-height: 300px;
+      }
+
+      .service-grid,
+      .social-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .order-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .header {
+        padding: 14px 5%;
+      }
+
+      .nav {
+        gap: 10px 15px;
+      }
+
+      .nav a {
+        font-size: .82rem;
+      }
+
+      .hero,
+      .section {
+        padding: 60px 6%;
+      }
+
+      .hero-visual {
+        min-height: 270px;
+      }
+
+      .planet {
+        width: 135px;
+        height: 135px;
+      }
+
+      .presentation-card {
+        grid-template-columns: 1fr;
+        padding: 23px;
+      }
+
+      .service-grid,
+      .social-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .final-cta {
+        margin: 15px 5% 60px;
+        padding: 40px 20px;
+      }
+
+      .order-page {
+        padding: 40px 5% 65px;
+      }
+
+      .options-panel,
+      .summary-panel {
+        padding: 18px;
+      }
+
+      .option-row {
+        align-items: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .stepper {
+        margin-left: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
-  <header class="site-header">
-    <a class="brand" href="index.html">
-      <span class="brand-name">Orion<span class="brand-dot">.</span></span>
-      <span class="brand-tagline">Chase Your Dreams</span>
+  <header class="header">
+    <a href="#accueil" class="brand" data-page="home">
+      <span class="brand-name">Orion</span>
+      <span class="brand-tagline">Chase Your Dreams 🌌</span>
     </a>
 
-    <button class="menu-toggle" aria-label="Ouvrir le menu">☰</button>
-
-    <nav class="main-nav">
-      <a href="#presentation">Présentation du projet</a>
-      <a href="#reseaux">Réseaux sociaux</a>
-      <a href="#services">Bénéficier des services</a>
+    <nav class="nav" id="mainNav">
+      <a href="#presentation" data-section="presentation">Présentation</a>
+      <a href="#reseaux" data-section="reseaux">Réseaux</a>
+      <a href="#services" data-section="services">Services</a>
+      <a href="#commande" class="nav-cta" data-page="order">Passer commande</a>
     </nav>
-
-    <a class="header-cta" href="commande.html">Passer commande ↗</a>
   </header>
 
-  <main>
-    <section class="hero section-wrap">
-      <div class="hero-copy">
-        <div class="eyebrow">✦ UN ÉLAN POUR VOS AMBITIONS</div>
-        <h1>Vos idées méritent<br>de <span>briller.</span></h1>
+  <!-- PAGE D'ACCUEIL -->
+  <main id="homePage" class="page active">
+    <section id="accueil" class="hero">
+      <div class="hero-content">
+        <p class="eyebrow">CRÉATIVITÉ · AMBITION · VISIBILITÉ</p>
+
+        <h1>
+          Donne vie à tes idées avec
+          <span class="gradient-text">Orion.</span>
+        </h1>
+
         <p class="hero-description">
-          Orion accompagne les créateurs et entrepreneurs qui veulent
-          transformer leurs ambitions en projets concrets.
+          Nous aidons les créateurs et les entrepreneurs à développer leurs
+          projets grâce à la création de contenu, aux sites web et à une
+          meilleure visibilité en ligne.
         </p>
 
         <div class="hero-actions">
-          <a class="button button-primary" href="#presentation">Découvrir Orion ↓</a>
-          <a class="button button-quiet" href="commande.html">Construire mon projet ↗</a>
+          <a href="#presentation" class="button button-primary" data-section="presentation">
+            Découvrir Orion
+          </a>
+          <a href="#commande" class="button button-secondary" data-page="order">
+            Passer commande
+          </a>
         </div>
 
-        <p class="hero-note">✦ Une équipe à vos côtés, de l'idée au lancement.</p>
+        <div class="hero-note">
+          <span class="status-dot"></span>
+          Tes idées méritent de briller.
+        </div>
       </div>
 
-      <div class="hero-visual">
-        <div class="orbit orbit-a"></div>
-        <div class="orbit orbit-b"></div>
-        <div class="orbit orbit-c"></div>
-        <div class="planet">O</div>
-        <span class="star star-a">✦</span>
-        <span class="star star-b">✧</span>
-        <span class="star star-c">✦</span>
-        <div class="visual-label">✦ YOUR NEXT CHAPTER</div>
+      <div class="hero-visual" aria-label="Illustration spatiale Orion">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="planet"><span>✦</span></div>
+        <div class="star star-one">✦</div>
+        <div class="star star-two">✧</div>
+        <div class="star star-three">✦</div>
+        <div class="star star-four">✧</div>
+        <div class="hero-orion">ORION</div>
       </div>
     </section>
 
-    <section id="presentation" class="section-wrap content-section">
+    <section id="presentation" class="section">
       <div class="section-heading">
-        <div>
-          <div class="eyebrow">01 / NOTRE VISION</div>
-          <h2>Le projet <span>Orion</span></h2>
-        </div>
-        <p>De l'ambition, des idées et les bons outils pour leur donner vie.</p>
+        <p class="eyebrow">QUI SOMMES-NOUS ?</p>
+        <h2>Bienvenue dans <span class="gradient-text">notre univers.</span></h2>
+        <p>Un projet imaginé pour accompagner ceux qui veulent aller plus loin.</p>
       </div>
 
-      <div class="intro-card">
-        <div class="intro-mark">O<span>✦</span></div>
-        <div class="intro-text">
-          <p class="lead">
-            Cocréé et dirigé par Ry0ung_ et le onnixdev_,
-            notre projet est né d'une ambition simple :
-            <strong>propulser les petits créateurs et entrepreneurs vers la réussite.</strong>
+      <div class="presentation-card">
+        <div class="presentation-icon">🌌</div>
+        <div>
+          <h3>Un projet fait pour les créateurs</h3>
+          <p>
+            Orion est un projet co-créé et dirigé par Ry0ung_ et son
+            coéquipier. Notre objectif est d'aider les petits créateurs,
+            les entrepreneurs et les personnes ambitieuses à développer
+            leur présence sur Internet.
           </p>
           <p>
-            Que tu sois réalisateur, sportif, créateur de contenu,
-            développeur ou que tu souhaites lancer ta boutique e-commerce,
-            Orion est là pour t'accompagner. Nous savons à quel point
-            il peut être difficile de se lancer et de se faire connaître.
-            C'est pourquoi nous proposons des services adaptés à tes
-            besoins, à tes objectifs et à ton budget.
+            Nous proposons des services de création de contenu vidéo,
+            de développement de sites web et d'amélioration de la visibilité
+            en ligne. Nous souhaitons également accompagner les créateurs
+            dans leur progression sur les réseaux sociaux, notamment grâce
+            au coaching d'influenceur.
           </p>
+          <p>
+            Que tu commences tout juste ton aventure ou que tu souhaites
+            faire évoluer un projet existant, Orion est là pour t'aider à
+            transformer tes idées en quelque chose de concret.
+          </p>
+          <p class="signature">Orion, Chase Your Dreams 🌌</p>
         </div>
+      </div>
+    </section>
+
+    <section id="services" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">CE QUE NOUS PROPOSONS</p>
+        <h2>Nos <span class="gradient-text">services.</span></h2>
+        <p>Les outils pour faire grandir ton projet.</p>
       </div>
 
       <div class="service-grid">
         <article class="service-card">
-          <div class="service-icon">▶</div>
-          <h3>Création de contenu</h3>
-          <p>Des vidéos et contenus conçus pour raconter ton histoire et attirer l'attention sur les réseaux.</p>
-          <span class="card-index">01</span>
+          <div class="service-icon">💻</div>
+          <h3>Création de sites web</h3>
+          <p>Un site adapté à ton projet pour présenter ton activité, tes créations ou ta communauté.</p>
         </article>
 
         <article class="service-card">
-          <div class="service-icon">⌘</div>
-          <h3>Sites web</h3>
-          <p>Une vitrine professionnelle pour présenter ton projet, ton activité ou ta boutique en ligne.</p>
-          <span class="card-index">02</span>
+          <div class="service-icon">🎬</div>
+          <h3>Création vidéo</h3>
+          <p>Des vidéos pour mettre en valeur ton univers et partager tes idées avec ton public.</p>
         </article>
 
         <article class="service-card">
-          <div class="service-icon">↗</div>
-          <h3>Visibilité & conseils</h3>
-          <p>Un accompagnement personnalisé pour faire évoluer ta présence et franchir un cap.</p>
-          <span class="card-index">03</span>
+          <div class="service-icon">📱</div>
+          <h3>Visibilité sur les réseaux</h3>
+          <p>Des contenus promotionnels pour faire découvrir ton projet à davantage de personnes.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">🚀</div>
+          <h3>Coaching d'influenceur</h3>
+          <p>Des conseils pour développer ta présence et progresser en tant que créateur.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">🎨</div>
+          <h3>Création de logo</h3>
+          <p>Une identité visuelle pour donner à ton projet une image reconnaissable.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">✨</div>
+          <h3>Ton projet, tes choix</h3>
+          <p>Compose ta commande en fonction de tes besoins et des options disponibles.</p>
+          <a href="#commande" class="text-link" data-page="order">Découvrir les tarifs →</a>
         </article>
       </div>
 
-      <div class="quote-panel">
-        <span class="quote-symbol">“</span>
-        <div>
-          <p>Tout grand projet commence par un premier pas. Orion est là pour vous donner l'élan nécessaire.</p>
-          <span>LA PHILOSOPHIE ORION</span>
-        </div>
-      </div>
-
-      <div class="benefits-grid">
-        <div>
-          <span class="benefit-icon">✦</span>
-          <strong>Flexibilité</strong>
-          <p>Des options à la carte selon ton budget et tes envies.</p>
-        </div>
-        <div>
-          <span class="benefit-icon">♡</span>
-          <strong>Accompagnement humain</strong>
-          <p>Une équipe passionnée, à l'écoute et disponible.</p>
-        </div>
-        <div>
-          <span class="benefit-icon">↗</span>
-          <strong>Une image soignée</strong>
-          <p>Des bases solides pour présenter ton projet avec confiance.</p>
-        </div>
+      <div class="center-action">
+        <a href="#commande" class="button button-primary" data-page="order">
+          Configurer ma commande
+        </a>
       </div>
     </section>
 
-    <section id="reseaux" class="section-wrap content-section">
+    <section id="reseaux" class="section">
       <div class="section-heading">
-        <div>
-          <div class="eyebrow">02 / RESTONS CONNECTÉS</div>
-          <h2>Retrouve Orion <span>en ligne.</span></h2>
-        </div>
-        <p>Rejoins la communauté et suis les prochaines actualités du projet.</p>
+        <p class="eyebrow">RESTONS CONNECTÉS</p>
+        <h2>Retrouve Orion <span class="gradient-text">en ligne.</span></h2>
+        <p>Suis le projet et viens échanger avec notre communauté.</p>
       </div>
 
       <div class="social-grid">
-        <a class="social-card" href="https://discord.gg/ber5FpTQJ" target="_blank" rel="noopener noreferrer">
-          <span class="social-logo discord">◉</span>
-          <span><strong>Discord</strong><small>Rejoindre la communauté</small></span>
+        <a href="https://discord.gg/ber5FpTQJ" target="_blank" rel="noopener noreferrer" class="social-card">
+          <span class="social-icon">💬</span>
+          <span class="social-name">Discord</span>
+          <span class="social-description">Rejoins la communauté</span>
           <span class="social-arrow">↗</span>
         </a>
 
-        <div class="social-card upcoming">
-          <span class="social-logo youtube">▶</span>
-          <span><strong>YouTube</strong><small>Prochainement</small></span>
-          <span class="soon-tag">BIENTÔT</span>
-        </div>
+        <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" class="social-card">
+          <span class="social-icon">▶️</span>
+          <span class="social-name">YouTube</span>
+          <span class="social-description">Découvre nos vidéos</span>
+          <span class="social-arrow">↗</span>
+        </a>
 
-        <div class="social-card upcoming">
-          <span class="social-logo instagram">◎</span>
-          <span><strong>Instagram</strong><small>Prochainement</small></span>
-          <span class="soon-tag">BIENTÔT</span>
-        </div>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-card">
+          <span class="social-icon">📸</span>
+          <span class="social-name">Instagram</span>
+          <span class="social-description">Suis notre actualité</span>
+          <span class="social-arrow">↗</span>
+        </a>
 
-        <div class="social-card upcoming">
-          <span class="social-logo tiktok">♪</span>
-          <span><strong>TikTok</strong><small>Prochainement</small></span>
-          <span class="soon-tag">BIENTÔT</span>
-        </div>
+        <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" class="social-card">
+          <span class="social-icon">🎵</span>
+          <span class="social-name">TikTok</span>
+          <span class="social-description">Retrouve nos contenus</span>
+          <span class="social-arrow">↗</span>
+        </a>
 
-        <div class="social-card upcoming">
-          <span class="social-logo whatsapp">◔</span>
-          <span><strong>WhatsApp</strong><small>Prochainement</small></span>
-          <span class="soon-tag">BIENTÔT</span>
+        <div class="social-card social-disabled">
+          <span class="social-icon">📱</span>
+          <span class="social-name">WhatsApp</span>
+          <span class="social-description">Bientôt disponible</span>
+          <span class="coming-soon">À VENIR</span>
         </div>
       </div>
     </section>
 
-    <section id="services" class="section-wrap order-banner">
-      <div>
-        <div class="eyebrow">03 / TON PROJET COMMENCE ICI</div>
-        <h2>Prêt à passer<br>à <span>l'étape suivante ?</span></h2>
-        <p>Compose ton offre, ajuste les options à tes besoins et découvre le prix estimé en direct.</p>
-      </div>
-      <a class="button button-primary" href="commande.html">Passer commande ↗</a>
-      <div class="banner-orbit"></div>
+    <section class="final-cta">
+      <p class="eyebrow">PRÊT À TE LANCER ?</p>
+      <h2>Fais passer ton projet au niveau supérieur.</h2>
+      <p>Choisis les services dont tu as besoin et construisons la suite de ton aventure.</p>
+      <a href="#commande" class="button button-primary" data-page="order">Passer commande</a>
     </section>
   </main>
 
-  <footer class="site-footer section-wrap">
-    <a class="footer-brand" href="#">Orion<span>.</span></a>
-    <span>Chase Your Dreams </span>
-    <span>© <span id="year"></span> Orion — Tous droits réservés.</span>
+  <!-- PAGE DE COMMANDE, DANS LE MÊME FICHIER -->
+  <main id="orderPage" class="page">
+    <div class="order-page">
+      <a href="#accueil" class="back-link" data-page="home">← Retour à l'accueil</a>
+
+      <div class="order-intro">
+        <p class="eyebrow">PERSONNALISE TON PROJET</p>
+        <h1>Configure ta <span class="gradient-text">commande.</span></h1>
+        <p>
+          Choisis les options dont tu as besoin. Le prix se met à jour
+          automatiquement en fonction de tes sélections.
+        </p>
+      </div>
+
+      <div class="order-layout">
+        <section class="options-panel">
+          <h2>Les options</h2>
+
+          <div class="option-row">
+            <div class="option-info">
+              <strong>Site web de base</strong>
+              <small>1 photo, 1 vidéo intégrée et hébergement sur Netlify avec une adresse .netlify.app</small>
+            </div>
+            <span class="price">Inclus</span>
+          </div>
+
+          <div class="option-row">
+            <div class="option-info">
+              <strong>Photos supplémentaires</strong>
+              <small>De 0 à 10 photos · 0,50 € par photo</small>
+            </div>
+            <div class="stepper">
+              <button type="button" data-step="photos" data-delta="-1" aria-label="Retirer une photo">−</button>
+              <output id="photosValue">0</output>
+              <button type="button" data-step="photos" data-delta="1" aria-label="Ajouter une photo">+</button>
+            </div>
+          </div>
+
+          <div class="option-row">
+            <div class="option-info">
+              <strong>Vidéos supplémentaires sur le site</strong>
+              <small>De 0 à 5 vidéos · 10 € par vidéo</small>
+            </div>
+            <div class="stepper">
+              <button type="button" data-step="siteVideos" data-delta="-1" aria-label="Retirer une vidéo">−</button>
+              <output id="siteVideosValue">0</output>
+              <button type="button" data-step="siteVideos" data-delta="1" aria-label="Ajouter une vidéo">+</button>
+            </div>
+          </div>
+
+          <div class="option-row">
+            <div class="option-info">
+              <strong>Nom de domaine</strong>
+              <small>Le domaine personnalisé est facturé à l'année.</small>
+              <select id="domain" class="domain-select" aria-label="Choisir un nom de domaine">
+                <option value="0">.netlify.app — Gratuit</option>
+                <option value="15">.fr — 15 €/an</option>
+                <option value="20">.com — 20 €/an</option>
+                <option value="13">.org — 13 €/an</option>
+              </select>
+            </div>
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" id="logo">
+            <span>
+              <strong>Création d'un logo</strong>
+              <small>Un logo personnalisé pour ton projet.</small>
+            </span>
+            <span class="price">25 €</span>
+          </label>
+
+          <div class="option-row">
+            <div class="option-info">
+              <strong>Vidéos promotionnelles pour les réseaux</strong>
+              <small>De 0 à 5 vidéos · 5 € par vidéo</small>
+            </div>
+            <div class="stepper">
+              <button type="button" data-step="socialVideos" data-delta="-1" aria-label="Retirer une vidéo promotionnelle">−</button>
+              <output id="socialVideosValue">0</output>
+              <button type="button" data-step="socialVideos" data-delta="1" aria-label="Ajouter une vidéo promotionnelle">+</button>
+            </div>
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" id="coaching">
+            <span>
+              <strong>Coaching d'influenceur</strong>
+              <small>Un accompagnement pour développer ta présence en ligne.</small>
+            </span>
+            <span class="price">25 €</span>
+          </label>
+        </section>
+
+        <aside class="summary-panel">
+          <h2>Récapitulatif</h2>
+
+          <div class="summary-line">
+            <span>Site de base</span>
+            <span>Inclus</span>
+          </div>
+
+          <div class="summary-line">
+            <span>Photos supplémentaires</span>
+            <span id="photosCost">0,00 €</span>
+          </div>
+
+          <div class="summary-line">
+            <span>Vidéos sur le site</span>
+            <span id="siteVideosCost">0,00 €</span>
+          </div>
+
+          <div class="summary-line">
+            <span>Domaine</span>
+            <span id="domainCost">0,00 €</span>
+          </div>
+
+          <div class="summary-line">
+            <span>Logo</span>
+            <span id="logoCost">0,00 €</span>
+          </div>
+
+          <div class="summary-line">
+            <span>Vidéos promotionnelles</span>
+            <span id="socialVideosCost">0,00 €</span>
+          </div>
+
+          <div class="summary-line">
+            <span>Coaching</span>
+            <span id="coachingCost">0,00 €</span>
+          </div>
+
+          <div class="summary-total">
+            <span>Total estimé</span>
+            <strong id="total">0,00 €</strong>
+          </div>
+
+          <p class="summary-note">
+            Le prix du domaine .fr, .com ou .org correspond à une année.
+            Son renouvellement peut entraîner des frais supplémentaires.
+            Le total affiché est une estimation selon les options choisies.
+          </p>
+
+          <button type="button" id="orderButton" class="button button-primary">
+            Passer commande
+          </button>
+
+          <div id="orderNotice" class="notice" role="status" aria-live="polite"></div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <a href="#accueil" class="footer-brand" data-page="home">Orion<span>🌌</span></a>
+    <p>Chase Your Dreams.</p>
+    <p class="copyright">© <span id="year"></span> Orion. Tous droits réservés.</p>
   </footer>
 
-  <script src="main.js"></script>
+  <script>
+    // Année automatique dans le pied de page.
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Navigation entre la page d'accueil et la page de commande
+    // dans le même fichier HTML, grâce à window.location.hash.
+    const homePage = document.getElementById("homePage");
+    const orderPage = document.getElementById("orderPage");
+
+    function showPage() {
+      const isOrder = window.location.hash === "#commande";
+
+      homePage.classList.toggle("active", !isOrder);
+      orderPage.classList.toggle("active", isOrder);
+
+      document.getElementById("mainNav").style.display = isOrder ? "none" : "flex";
+
+      if (isOrder) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        const sectionId = window.location.hash.slice(1);
+
+        if (sectionId && sectionId !== "accueil") {
+          setTimeout(() => {
+            document.getElementById(sectionId)?.scrollIntoView({
+              behavior: "smooth",
+              block: "start"
+            });
+          }, 50);
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }
+    }
+
+    document.querySelectorAll("[data-page]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const destination = link.dataset.page === "order"
+          ? "#commande"
+          : "#accueil";
+
+        if (window.location.hash === destination) {
+          showPage();
+        } else {
+          window.location.hash = destination;
+        }
+      });
+    });
+
+    document.querySelectorAll("[data-section]").forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        const section = link.dataset.section;
+
+        if (window.location.hash === "#commande") {
+          window.location.hash = "#" + section;
+        } else {
+          document.getElementById(section)?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+
+          if (window.location.hash !== "#" + section) {
+            history.replaceState(null, "", "#" + section);
+          }
+        }
+      });
+    });
+
+    window.addEventListener("hashchange", showPage);
+    showPage();
+
+    // Configuration des tarifs.
+    const quantities = {
+      photos: 0,
+      siteVideos: 0,
+      socialVideos: 0
+    };
+
+    const limits = {
+      photos: 10,
+      siteVideos: 5,
+      socialVideos: 5
+    };
+
+    const unitPrices = {
+      photos: 0.50,
+      siteVideos: 10,
+      socialVideos: 5
+    };
+
+    const euro = (amount) =>
+      amount.toLocaleString("fr-FR", {
+        style: "currency",
+        currency: "EUR"
+      });
+
+    function calculateTotal() {
+      const photosCost = quantities.photos * unitPrices.photos;
+      const siteVideosCost = quantities.siteVideos * unitPrices.siteVideos;
+      const socialVideosCost = quantities.socialVideos * unitPrices.socialVideos;
+      const domainCost = Number(document.getElementById("domain").value);
+      const logoCost = document.getElementById("logo").checked ? 25 : 0;
+      const coachingCost = document.getElementById("coaching").checked ? 25 : 0;
+
+      document.getElementById("photosValue").textContent = quantities.photos;
+      document.getElementById("siteVideosValue").textContent = quantities.siteVideos;
+      document.getElementById("socialVideosValue").textContent = quantities.socialVideos;
+
+      document.getElementById("photosCost").textContent = euro(photosCost);
+      document.getElementById("siteVideosCost").textContent = euro(siteVideosCost);
+      document.getElementById("socialVideosCost").textContent = euro(socialVideosCost);
+      document.getElementById("domainCost").textContent = euro(domainCost);
+      document.getElementById("logoCost").textContent = euro(logoCost);
+      document.getElementById("coachingCost").textContent = euro(coachingCost);
+
+      const total =
+        photosCost +
+        siteVideosCost +
+        socialVideosCost +
+        domainCost +
+        logoCost +
+        coachingCost;
+
+      document.getElementById("total").textContent = euro(total);
+
+      return {
+        total,
+        photos: quantities.photos,
+        siteVideos: quantities.siteVideos,
+        socialVideos: quantities.socialVideos,
+        domain: document.getElementById("domain").selectedOptions[0].textContent,
+        logo: document.getElementById("logo").checked,
+        coaching: document.getElementById("coaching").checked
+      };
+    }
+
+    document.querySelectorAll("[data-step]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const name = button.dataset.step;
+        const delta = Number(button.dataset.delta);
+
+        quantities[name] = Math.max(
+          0,
+          Math.min(limits[name], quantities[name] + delta)
+        );
+
+        calculateTotal();
+      });
+    });
+
+    document.getElementById("domain").addEventListener("change", calculateTotal);
+    document.getElementById("logo").addEventListener("change", calculateTotal);
+    document.getElementById("coaching").addEventListener("change", calculateTotal);
+
+    // Démonstration de commande : ce bouton ne transmet pas encore
+    // de commande à un serveur et n'effectue aucun paiement.
+    document.getElementById("orderButton").addEventListener("click", () => {
+      const order = calculateTotal();
+      const notice = document.getElementById("orderNotice");
+
+      notice.textContent =
+        "Récapitulatif prêt : " +
+        order.photos + " photo(s) supplémentaire(s), " +
+        order.siteVideos + " vidéo(s) sur le site, " +
+        order.socialVideos + " vidéo(s) promotionnelle(s). " +
+        "Domaine : " + order.domain + ". " +
+        "Logo : " + (order.logo ? "oui" : "non") + ". " +
+        "Coaching : " + (order.coaching ? "oui" : "non") + ". " +
+        "Total estimé : " + euro(order.total) +
+        ". Pour recevoir réellement cette commande, il faudra connecter un formulaire ou un système de commande.";
+
+      notice.classList.add("show");
+      notice.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    calculateTotal();
+  </script>
 </body>
 </html>
