@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Composer mon offre — Orion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html">
+      <span class="brand-name">Orion<span class="brand-dot">.</span></span>
+      <span class="brand-tagline">Chase Your Dreams</span>
+    </a>
+
+    <nav class="main-nav">
+      <a href="index.html#presentation">Le projet</a>
+      <a href="index.html#reseaux">Réseaux sociaux</a>
+      <a href="index.html#services">Nos services</a>
+    </nav>
+
+    <a class="header-cta" href="index.html">← Retour à l'accueil</a>
+  </header>
+
+  <main class="section-wrap configurator">
+    <div class="config-heading">
+      <div class="eyebrow">ORION STUDIO / CONFIGURATEUR</div>
+      <h1>Construis ton <span>offre.</span></h1>
+      <p>Choisis les options adaptées à ton projet. Le prix estimé se met à jour automatiquement.</p>
+    </div>
+
+    <div class="config-layout">
+      <div class="options-column">
+
+        <section class="option-panel">
+          <div class="panel-heading">
+            <div><span class="panel-number">01</span><h2>Ton site web</h2></div>
+            <span class="included-tag">PACK DE BASE INCLUS</span>
+          </div>
+
+          <p class="panel-description">
+            Une première vitrine pour présenter ton projet, avec un hébergement Netlify gratuit.
+          </p>
+
+          <div class="base-included">
+            <span class="included-check">✓</span>
+            <div>
+              <strong>Pack de base — 0 €</strong>
+              <p>Site web, 1 photo incluse, 1 vidéo intégrée incluse et adresse en <code>.netlify.app</code>.</p>
+            </div>
+          </div>
+
+          <div class="option-row">
+            <div class="option-info">
+              <strong>Photos supplémentaires</strong>
+              <small>0,50 € par photo · de 0 à 10</small>
+            </div>
+            <div class="stepper" data-option="photos">
+              <button type="button" data-change="-1">−</button>
+              <output id="photos-count">0</output>
+              <button type="button" data-change="1">+</button>
+            </div>
+          </div>
+
+          <div class="option-row">
+            <div class="option-info">
+              <strong>Vidéos supplémentaires sur le site</strong>
+              <small>10 € par vidéo · de 0 à 5</small>
+            </div>
+            <div class="stepper" data-option="siteVideos">
+              <button type="button" data-change="-1">−</button>
+              <output id="site-videos-count">0</output>
+              <button type="button" data-change="1">+</button>
+            </div>
+          </div>
+
+          <div class="option-row">
+            <div class="option-info">
+              <strong>Nom de domaine personnalisé</strong>
+              <small>Tarif annuel · Netlify reste gratuit par défaut</small>
+            </div>
+            <div class="select-wrap">
+              <select id="domain" aria-label="Choisir un nom de domaine">
+                <option value="0">.netlify.app — Gratuit</option>
+                <option value="15">.fr — 15 €/an</option>
+                <option value="20">.com — 20 €/an</option>
+                <option value="13">.org — 13 €/an</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="option-row">
+            <div class="option-info">
+              <strong>Création d'un logo</strong>
+              <small>Un logo personnalisé · 25 €</small>
+            </div>
+            <label class="switch">
+              <input id="logo" type="checkbox">
+              <span class="switch-track"></span>
+            </label>
+          </div>
+        </section>
+
+        <section class="option-panel">
+          <div class="panel-heading">
+            <div><span class="panel-number">02</span><h2>Contenu pour les réseaux</h2></div>
+            <span class="category-icon">▶</span>
+          </div>
+
+          <p class="panel-description">
+            Des vidéos promotionnelles pour mettre en valeur ton activité, tes performances ou tes créations.
+          </p>
+
+          <div class="option-row">
+            <div class="option-info">
+              <strong>Vidéos promotionnelles</strong>
+              <small>5 € par vidéo publiée · de 0 à 5</small>
+            </div>
+            <div class="stepper" data-option="socialVideos">
+              <button type="button" data-change="-1">−</button>
+              <output id="social-videos-count">0</output>
+              <button type="button" data-change="1">+</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="option-panel">
+          <div class="panel-heading">
+            <div><span class="panel-number">03</span><h2>Accompagnement</h2></div>
+            <span class="category-icon">✦</span>
+          </div>
+
+          <p class="panel-description">
+            Des conseils personnalisés pour t'aider à faire grandir ta visibilité.
+          </p>
+
+          <label class="coach-option" for="coach">
+            <span class="coach-check">
+              <input id="coach" type="checkbox">
+              <span class="custom-check">✓</span>
+            </span>
+            <span class="coach-copy">
+              <strong>Accompagnement influenceur</strong>
+              <small>Un conseiller Orion t'aide à développer ta présence et tes résultats.</small>
+            </span>
+            <span class="coach-price">25 €</span>
+          </label>
+        </section>
+
+        <p class="pricing-note">
+          Prix indicatifs. Le nom de domaine personnalisé est facturé à l'année.
+          Pense à le renouveler pour le conserver. Les options et conditions définitives
+          seront confirmées avec l'équipe Orion.
+        </p>
+      </div>
+
+      <aside class="summary-panel">
+        <div class="summary-top">
+          <span class="eyebrow">RÉCAPITULATIF</span>
+          <div class="summary-orb">O<span>✦</span></div>
+          <h2>Ton projet,<br><span>ton budget.</span></h2>
+          <p>Voici le détail de ton offre personnalisée.</p>
+        </div>
+
+        <div id="summary-lines" class="summary-lines" aria-live="polite"></div>
+
+        <div class="summary-total">
+          <span>Total estimé</span>
+          <strong id="total-price">0,00 €</strong>
+        </div>
+
+        <p class="summary-caption" id="billing-caption"></p>
+
+        <button class="button button-primary order-submit" id="order-button" type="button">
+          Passer commande ↗
+        </button>
+
+        <p class="demo-message" id="order-message" role="status">
+          La commande en ligne sera activée prochainement.
+        </p>
+
+        <a class="summary-back" href="index.html">← Revenir à la présentation</a>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer section-wrap">
+    <a class="footer-brand" href="index.html">Orion<span>.</span></a>
+    <span>Chase Your Dreams </span>
+    <span>© <span id="year"></span> Orion</span>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
