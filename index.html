@@ -1,733 +1,647 @@
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Orion — Donnez vie à votre projet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d1b">
+<title>Orion — Chase Your Dreams</title>
+
 <style>
 :root {
-  --bg: #080d1b;
-  --panel: #111a30;
-  --panel2: #172440;
-  --text: #f4f7ff;
-  --muted: #aab7d0;
-  --blue: #6488ff;
-  --cyan: #55e1ed;
-  --border: #293858;
+  --bg:#080d1b;
+  --panel:#101a2e;
+  --panel2:#14223b;
+  --text:#f2f7ff;
+  --muted:#a7b5cb;
+  --blue:#69baff;
+  --cyan:#35e0d0;
+  --border:rgba(151,190,232,.2);
+  --gradient:linear-gradient(110deg,#75baff,#35e0d0);
 }
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  color: var(--text);
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:100px}
+body{
+  min-height:100vh;
+  color:var(--text);
   background:
-    radial-gradient(ellipse at top right, #172958 0, transparent 45%),
+    radial-gradient(ellipse at 80% 5%,rgba(32,111,180,.14),transparent 36%),
+    radial-gradient(ellipse at 10% 45%,rgba(32,209,198,.07),transparent 35%),
     var(--bg);
-  line-height: 1.6;
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  line-height:1.7;
 }
-button, input, select, textarea { font: inherit; }
-button, a { -webkit-tap-highlight-color: transparent; }
-a { color: var(--cyan); }
-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: rgba(8,13,27,.92);
-  border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(14px);
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.header{
+  position:sticky;top:0;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:20px;padding:16px 7%;
+  background:rgba(8,13,27,.92);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(18px);
 }
-.nav {
-  max-width: 1100px;
-  margin: auto;
-  padding: 14px 22px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
+.brand{display:flex;flex-direction:column;line-height:1.2}
+.brand-name{
+  font-size:1.8rem;font-weight:900;letter-spacing:-.06em;
+  background:var(--gradient);background-clip:text;
+  -webkit-background-clip:text;color:transparent;
 }
-.brand {
-  font-weight: 900;
-  font-size: 1.5rem;
-  letter-spacing: 3px;
-  color: white;
-  text-decoration: none;
+.brand-tagline{font-size:.72rem;color:var(--muted)}
+.nav{display:flex;flex-wrap:wrap;align-items:center;gap:16px}
+.nav a{font-size:.9rem;color:var(--muted)}
+.nav a:hover{color:var(--cyan)}
+.page{display:none;animation:fade .25s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.hero{
+  display:grid;grid-template-columns:1.1fr .9fr;
+  align-items:center;gap:40px;min-height:600px;padding:80px 9%;
 }
-.brand span { color: var(--cyan); }
-.nav-links { display: flex; gap: 18px; flex-wrap: wrap; }
-.nav-links a {
-  text-decoration: none;
-  color: var(--muted);
-  font-size: .94rem;
+.eyebrow{color:var(--cyan);font-size:.75rem;font-weight:800;letter-spacing:.18em;margin-bottom:14px}
+h1{font-size:clamp(2.6rem,6vw,5rem);line-height:1.08;letter-spacing:-.05em}
+.gradient-text{
+  background:var(--gradient);background-clip:text;
+  -webkit-background-clip:text;color:transparent;
 }
-.nav-links a:hover { color: white; }
-main {
-  max-width: 1100px;
-  margin: auto;
-  padding: 35px 22px 65px;
+.hero-description{max-width:610px;margin-top:25px;color:var(--muted);font-size:1.08rem}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.button{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:12px 20px;min-height:46px;border-radius:13px;
+  border:1px solid transparent;font-weight:800;transition:.2s;
 }
-.page { display: none; }
-.page.active { display: block; animation: appear .3s ease; }
-@keyframes appear {
-  from { opacity: 0; transform: translateY(7px); }
-  to { opacity: 1; transform: translateY(0); }
+.button:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.primary{color:#06121c;background:var(--gradient)}
+.secondary{color:var(--text);border-color:var(--border);background:transparent}
+.hero-note{margin-top:22px;color:var(--muted);font-size:.9rem}
+.hero-visual{position:relative;display:grid;place-items:center;min-height:340px}
+.orbit{position:absolute;width:min(100%,350px);aspect-ratio:1;border:1px solid #69baff66;border-radius:50%;transform:rotate(-25deg) scaleY(.58)}
+.orbit.two{width:min(85%,300px);border-color:#35e0d066;transform:rotate(45deg) scaleY(.58)}
+.planet{
+  display:grid;place-items:center;width:165px;height:165px;border-radius:50%;
+  background:radial-gradient(circle at 30% 25%,#c0f7ff,transparent 23%),linear-gradient(135deg,#418ff4,#24cfc7 75%,#122c5e);
+  box-shadow:0 0 80px #44b1f544;font-size:3rem;
 }
-.hero {
-  text-align: center;
-  padding: 80px 12px 55px;
+.star{position:absolute;color:var(--cyan);text-shadow:0 0 14px var(--cyan)}
+.s1{top:12%;left:18%}.s2{top:24%;right:12%;font-size:1.7rem}
+.s3{bottom:22%;left:12%}.s4{bottom:17%;right:18%;font-size:1.7rem}
+.hero-orion{position:absolute;bottom:4px;letter-spacing:.5em;color:#bedcff99;font-size:.8rem;font-weight:900}
+.section{padding:80px 9%}
+.section-heading{max-width:760px;margin:0 auto 38px;text-align:center}
+.section-heading h2,.final-cta h2{font-size:clamp(2rem,4vw,3.2rem);line-height:1.2}
+.section-heading p,.muted{color:var(--muted)}
+.section-heading p{margin-top:12px}
+.presentation-card{
+  display:grid;grid-template-columns:80px 1fr;gap:25px;max-width:1000px;
+  margin:auto;padding:32px;border:1px solid var(--border);border-radius:24px;
+  background:linear-gradient(145deg,#14223bf2,#0b1324e8);
 }
-.eyebrow {
-  color: var(--cyan);
-  font-size: .8rem;
-  font-weight: bold;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+.presentation-icon{font-size:2.3rem}
+.presentation-card h3{font-size:1.5rem;margin-bottom:12px}
+.presentation-card p{margin-top:12px;color:var(--muted)}
+.signature{color:var(--cyan)!important;font-weight:800}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{
+  position:relative;display:block;padding:25px;border:1px solid var(--border);
+  border-radius:20px;background:rgba(16,26,46,.85);transition:.2s;
 }
-h1 { font-size: clamp(2.4rem, 7vw, 5rem); line-height: 1.08; margin: 16px 0; }
-h1 span {
-  background: linear-gradient(90deg, var(--cyan), #8293ff);
-  color: transparent;
-  background-clip: text;
+.card:hover{transform:translateY(-4px);border-color:#35e0d080;background:var(--panel2)}
+.card-icon{display:block;font-size:1.9rem;margin-bottom:12px}
+.card h3{font-size:1.1rem;margin-bottom:8px}
+.card p{font-size:.92rem;color:var(--muted)}
+.text-link{display:inline-block;margin-top:15px;color:var(--cyan);font-weight:800}
+.final-cta{
+  margin:20px 9% 80px;padding:50px 25px;border:1px solid var(--border);
+  border-radius:28px;background:radial-gradient(ellipse at 50% 0%,#35e0d01f,transparent 65%),var(--panel);
+  text-align:center;
 }
-h2 { font-size: clamp(1.5rem, 4vw, 2.2rem); line-height: 1.2; }
-h3 { margin-top: 0; }
-p { color: var(--muted); }
-.hero p { max-width: 680px; margin: 18px auto 28px; font-size: 1.1rem; }
-.actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-.btn {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 19px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--panel2);
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
-  transition: .2s;
+.final-cta p{margin-top:12px;color:var(--muted)}
+.final-cta .button{margin-top:24px}
+.footer{padding:30px 20px;border-top:1px solid var(--border);text-align:center;color:var(--muted)}
+.footer strong{font-size:1.4rem;color:var(--text)}
+.footer p{font-size:.85rem;margin-top:5px}
+
+/* Pages de commande */
+.order-page,.form-page,.payment-page,.privacy-page{
+  max-width:1000px;min-height:70vh;margin:auto;padding:55px 25px 80px;
 }
-.btn:hover { transform: translateY(-2px); border-color: var(--cyan); }
-.btn.primary {
-  color: #07111d;
-  background: linear-gradient(100deg, var(--cyan), #8ba0ff);
-  border: none;
+.back-link{display:inline-block;margin-bottom:22px;color:var(--cyan);font-weight:700}
+.page-heading{margin-bottom:30px}
+.page-heading h1{font-size:clamp(2.3rem,5vw,3.7rem)}
+.page-heading p{margin-top:12px;color:var(--muted);max-width:720px}
+.order-layout{display:grid;grid-template-columns:1fr 300px;align-items:start;gap:20px}
+.panel{
+  padding:24px;border:1px solid var(--border);border-radius:22px;
+  background:rgba(16,26,46,.9);margin-bottom:18px;
 }
-.btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-.section-head { margin: 12px 0 25px; }
-.section-head p { max-width: 720px; }
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 17px;
+.panel h2{font-size:1.25rem;margin-bottom:16px}
+.option-row{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:15px;padding:17px 0;border-bottom:1px solid var(--border);
 }
-.card, .panel, .step {
-  background: rgba(17,26,48,.92);
-  border: 1px solid var(--border);
-  border-radius: 17px;
-  padding: 22px;
+.option-row:last-child{border-bottom:0}
+.option-info{flex:1;min-width:140px}
+.option-info strong{display:block}
+.option-info small{display:block;color:var(--muted)}
+.price{color:var(--cyan);font-weight:800;white-space:nowrap}
+.stepper{display:flex;align-items:center;gap:10px}
+.stepper button{
+  width:34px;height:34px;border:1px solid var(--border);border-radius:10px;
+  background:var(--panel2);color:var(--text);font-size:1.2rem;
 }
-.card p { margin-bottom: 0; }
-.icon { font-size: 1.8rem; margin-bottom: 10px; }
-.price { color: var(--cyan); font-weight: bold; }
-.pill {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 99px;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  font-size: .82rem;
+.stepper output{min-width:20px;text-align:center;font-weight:800}
+.domain-select,.field input,.field select,.field textarea{
+  width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;
+  background:var(--bg);color:var(--text);outline:none;
 }
-.options-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(260px, .8fr);
-  gap: 20px;
-  align-items: start;
+.domain-select{margin-top:10px}
+.field select option,.domain-select option{background:var(--bg);color:var(--text)}
+.checkbox-row{display:flex;align-items:flex-start;gap:12px;padding:15px 0;cursor:pointer}
+.checkbox-row input{margin-top:6px;accent-color:var(--cyan)}
+.summary-panel{position:sticky;top:105px}
+.summary-line,.payment-line{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:.9rem}
+.summary-line span:first-child,.payment-line span{color:var(--muted)}
+.summary-line span:last-child{text-align:right}
+.summary-total,.payment-total{display:flex;justify-content:space-between;gap:12px;padding-top:18px;margin-top:12px;border-top:1px solid var(--border)}
+.summary-total strong,.payment-total strong{font-size:1.5rem;color:var(--cyan)}
+.summary-note{margin:15px 0;color:var(--muted);font-size:.8rem}
+.full-button{width:100%;margin-top:12px}
+.notice{display:none;margin-top:15px;padding:13px;border:1px solid #35e0d055;border-radius:12px;background:#35e0d00d;color:var(--muted);font-size:.9rem}
+.notice.show{display:block}
+
+/* Formulaire en six étapes */
+.steps{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin:22px 0}
+.step-label{padding:9px 5px;text-align:center;border:1px solid var(--border);border-radius:10px;color:var(--muted);font-size:.8rem}
+.step-label.current{color:var(--cyan);border-color:var(--cyan);background:#35e0d00d}
+.form-section{padding:25px;border:1px solid var(--border);border-radius:22px;background:rgba(16,26,46,.9)}
+.form-section h2{margin-bottom:20px}
+.field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-weight:700}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--cyan)}
+.field textarea{min-height:110px;resize:vertical}
+.field.full{grid-column:1/-1}
+.form-actions{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:22px}
+.form-actions button:disabled{opacity:.45;cursor:not-allowed}
+.privacy-card p{color:var(--muted);margin:10px 0}
+.privacy-card h2{margin-top:24px;margin-bottom:8px}
+
+@media(max-width:850px){
+  .header{align-items:flex-start;flex-direction:column}
+  .hero{grid-template-columns:1fr;padding-top:60px}
+  .hero-visual{min-height:280px}
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .order-layout{grid-template-columns:1fr}
+  .summary-panel{position:static}
 }
-.option-group { margin-bottom: 18px; }
-.option-group h3 { margin-bottom: 6px; }
-.option-group > p { margin-top: 0; font-size: .92rem; }
-.option-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
-  padding: 13px 0;
-  border-bottom: 1px solid var(--border);
-}
-.option-row:last-child { border-bottom: 0; }
-.option-row label { flex: 1; cursor: pointer; }
-.option-row small { display: block; color: var(--muted); }
-input[type="checkbox"] { accent-color: var(--cyan); width: 18px; height: 18px; }
-input[type="number"] { width: 78px; }
-select, input:not([type="checkbox"]):not([type="radio"]), textarea {
-  width: 100%;
-  padding: 11px 12px;
-  border-radius: 9px;
-  color: var(--text);
-  background: #0b1325;
-  border: 1px solid var(--border);
-  outline: none;
-}
-select:focus, input:focus, textarea:focus { border-color: var(--cyan); }
-select option { background: #0b1325; }
-textarea { min-height: 115px; resize: vertical; }
-label.field-label { display: block; font-weight: bold; margin: 15px 0 6px; }
-.help { color: var(--muted); font-size: .87rem; margin: 5px 0 0; }
-.summary {
-  position: sticky;
-  top: 95px;
-}
-.total {
-  font-size: 2.1rem;
-  font-weight: 900;
-  margin: 6px 0 16px;
-}
-.total span { color: var(--cyan); }
-.summary-line {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  border-bottom: 1px solid var(--border);
-  padding: 8px 0;
-  color: var(--muted);
-}
-.summary-line strong { color: white; text-align: right; }
-.steps {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
-  margin: 20px 0;
-}
-.step {
-  padding: 9px 6px;
-  text-align: center;
-  font-size: .82rem;
-  color: var(--muted);
-}
-.step.current { border-color: var(--cyan); color: var(--cyan); }
-.form-section { margin: 20px 0; }
-.form-section h3 { color: var(--cyan); }
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 17px; }
-.full { grid-column: 1 / -1; }
-.form-nav {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  margin-top: 22px;
-}
-.notice {
-  border: 1px solid #75652e;
-  background: rgba(117,101,46,.14);
-  color: #f3dfa0;
-  padding: 13px 15px;
-  border-radius: 10px;
-  font-size: .92rem;
-}
-.success {
-  border: 1px solid #287b64;
-  background: rgba(40,123,100,.15);
-  padding: 15px;
-  border-radius: 12px;
-}
-footer {
-  border-top: 1px solid var(--border);
-  padding: 26px 20px;
-  text-align: center;
-  color: var(--muted);
-}
-footer a { margin: 0 8px; }
-ul { color: var(--muted); padding-left: 22px; }
-[hidden] { display: none !important; }
-@media (max-width: 760px) {
-  .grid { grid-template-columns: 1fr; }
-  .options-layout { grid-template-columns: 1fr; }
-  .summary { position: static; }
-  .nav { align-items: flex-start; flex-direction: column; }
-  .nav-links { gap: 12px; }
-  .form-grid { grid-template-columns: 1fr; }
-  .full { grid-column: auto; }
-  .steps { grid-template-columns: repeat(3, 1fr); }
-  main { padding-left: 15px; padding-right: 15px; }
-  .hero { padding-top: 48px; }
+@media(max-width:560px){
+  .header{padding:14px 5%}
+  .nav{gap:10px 14px}
+  .hero,.section{padding:55px 6%}
+  .presentation-card{grid-template-columns:1fr;padding:23px}
+  .cards{grid-template-columns:1fr}
+  .final-cta{margin:15px 5% 55px;padding:35px 20px}
+  .order-page,.form-page,.payment-page,.privacy-page{padding:35px 5% 60px}
+  .panel,.form-section{padding:18px}
+  .steps{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .field-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
+
 <body>
-<header>
-  <div class="nav">
-    <a class="brand" href="#accueil" aria-label="Orion accueil">ORI<span>O</span>N</a>
-    <nav class="nav-links" aria-label="Navigation principale">
-      <a href="#accueil">Accueil</a>
-      <a href="#options">Options</a>
-      <a href="#confidentialite">Confidentialité</a>
-    </nav>
-  </div>
+
+<header class="header">
+  <a class="brand" href="#accueil">
+    <span class="brand-name">Orion</span>
+    <span class="brand-tagline">Chase Your Dreams.</span>
+  </a>
+  <nav class="nav" id="mainNav">
+    <a href="#accueil">Accueil</a>
+    <a href="#presentation">Présentation</a>
+    <a href="#services">Services</a>
+    <a href="#reseaux">Réseaux</a>
+    <a class="button primary" href="#commande">Nos options</a>
+  </nav>
 </header>
 
-<main>
-  <!-- 1. ACCUEIL -->
-  <section id="accueil" class="page active">
-    <div class="hero">
-      <div class="eyebrow">Créativité · Technologie · Ambition</div>
-      <h1>Votre projet mérite<br><span>de prendre son envol.</span></h1>
-      <p>
-        Orion vous accompagne dans la création de votre site web,
-        de votre identité visuelle et de vos contenus numériques.
-        Présentez-nous votre idée et construisons la suite ensemble.
+<main id="homePage" class="page active">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">BIENVENUE DANS L'UNIVERS ORION</p>
+      <h1>Donne vie à tes idées.<br><span class="gradient-text">Vise les étoiles.</span></h1>
+      <p class="hero-description">
+        Orion t'accompagne dans tes projets numériques : création de site web,
+        contenu visuel, identité de marque et accompagnement.
       </p>
-      <div class="actions">
-        <a class="btn primary" href="#options">Découvrir nos options →</a>
-        <a class="btn" href="#confidentialite">Politique de confidentialité</a>
+      <div class="hero-actions">
+        <a href="#commande" class="button primary">Découvrir nos options ↗</a>
+        <a href="#presentation" class="button secondary">Découvrir Orion</a>
       </div>
+      <p class="hero-note"><span style="color:var(--cyan)">●</span> Un projet, une vision, de nouvelles possibilités.</p>
     </div>
-
-    <div class="section-head">
-      <div class="eyebrow">Nos domaines</div>
-      <h2>Des idées aux projets concrets</h2>
-      <p>Choisissez les prestations qui correspondent à vos besoins.</p>
-    </div>
-    <div class="grid">
-      <article class="card">
-        <div class="icon">🌐</div>
-        <h3>Création de sites</h3>
-        <p>Un site adapté à votre projet, à votre public et à vos objectifs.</p>
-      </article>
-      <article class="card">
-        <div class="icon">🎨</div>
-        <h3>Identité visuelle</h3>
-        <p>Un logo et une présentation visuelle qui reflètent votre univers.</p>
-      </article>
-      <article class="card">
-        <div class="icon">🎬</div>
-        <h3>Contenu & promotion</h3>
-        <p>Des vidéos et des conseils pour mettre votre projet en valeur.</p>
-      </article>
-    </div>
-
-    <div class="panel" style="margin-top:20px">
-      <h2>Comment ça marche ?</h2>
-      <div class="grid">
-        <div><span class="pill">01</span><h3>Choisissez</h3><p>Sélectionnez les options et consultez le prix.</p></div>
-        <div><span class="pill">02</span><h3>Présentez votre idée</h3><p>Remplissez le formulaire de projet en six parties.</p></div>
-        <div><span class="pill">03</span><h3>Récapitulatif</h3><p>Vérifiez votre demande et accédez au paiement.</p></div>
-      </div>
-      <a class="btn primary" href="#options">Commencer ma commande</a>
-    </div>
-
-    <div class="panel" style="margin-top:20px">
-      <h2>Retrouvez Orion</h2>
-      <p>Rejoignez la communauté ou suivez nos actualités.</p>
-      <div class="actions">
-        <a class="btn" href="https://discord.gg/ber5FpTQJ" target="_blank" rel="noopener">Discord</a>
-        <a class="btn" href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a>
-        <a class="btn" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
-        <a class="btn" href="https://www.tiktok.com/" target="_blank" rel="noopener">TikTok</a>
-      </div>
+    <div class="hero-visual" aria-label="Illustration de la planète Orion">
+      <div class="orbit"></div><div class="orbit two"></div>
+      <span class="star s1">✦</span><span class="star s2">✧</span>
+      <span class="star s3">✧</span><span class="star s4">✦</span>
+      <div class="planet">✦</div>
+      <div class="hero-orion">O R I O N</div>
     </div>
   </section>
 
-  <!-- 2. OPTIONS -->
-  <section id="options" class="page">
-    <div class="section-head">
-      <div class="eyebrow">Étape 1 sur 3</div>
-      <h1 style="font-size:clamp(2rem,5vw,3.4rem)">Personnalisez votre commande</h1>
-      <p>Choisissez vos options. Le total se met à jour automatiquement. Vous pourrez ensuite remplir le formulaire.</p>
+  <section class="section" id="presentation">
+    <div class="section-heading">
+      <p class="eyebrow">QUI SOMMES-NOUS ?</p>
+      <h2>Une vision tournée vers <span class="gradient-text">l'avenir.</span></h2>
+      <p>La créativité rencontre la technologie pour donner vie à tes ambitions.</p>
     </div>
-
-    <div class="options-layout">
-      <div class="panel">
-        <div class="option-group">
-          <h3>🌐 Site web</h3>
-          <p>La formule de base comprend une photo, une vidéo intégrée et un sous-domaine gratuit.</p>
-          <div class="option-row">
-            <label for="photos">Photos supplémentaires <small>0,50 € par photo, jusqu'à 10</small></label>
-            <input id="photos" type="number" min="0" max="10" step="1" value="0">
-          </div>
-          <div class="option-row">
-            <label for="videos">Vidéos intégrées supplémentaires <small>10 € par vidéo, jusqu'à 5</small></label>
-            <input id="videos" type="number" min="0" max="5" step="1" value="0">
-          </div>
-          <div class="option-row">
-            <label for="domain">Nom de domaine <small>Prix annuel selon l'extension</small></label>
-            <select id="domain">
-              <option value="0">.netlify.app — gratuit</option>
-              <option value="15">.fr — 15 €/an</option>
-              <option value="20">.com — 20 €/an</option>
-              <option value="13">.org — 13 €/an</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="option-group">
-          <h3>🎨 Identité visuelle</h3>
-          <div class="option-row">
-            <label for="logo">Création d'un logo <small>25 €</small></label>
-            <input id="logo" type="checkbox" value="25">
-          </div>
-        </div>
-
-        <div class="option-group">
-          <h3>📣 Promotion</h3>
-          <div class="option-row">
-            <label for="promo">Vidéos promotionnelles pour les réseaux <small>5 € par vidéo, jusqu'à 5</small></label>
-            <input id="promo" type="number" min="0" max="5" step="1" value="0">
-          </div>
-          <div class="option-row">
-            <label for="coaching">Accompagnement pour les collaborations avec des influenceurs <small>25 €</small></label>
-            <input id="coaching" type="checkbox" value="25">
-          </div>
-        </div>
-
-        <p class="help">Les tarifs sont indicatifs pour cette démonstration. Les frais annuels éventuels sont indiqués séparément dans le récapitulatif.</p>
+    <article class="presentation-card">
+      <div class="presentation-icon">🌌</div>
+      <div>
+        <h3>Bienvenue chez Orion</h3>
+        <p>Orion est un projet dédié à celles et ceux qui souhaitent développer leur présence numérique et concrétiser leurs idées.</p>
+        <p>Notre objectif est de proposer des solutions accessibles, adaptées à tes besoins et pensées pour t'aider à avancer dans ton projet.</p>
+        <p>Que tu démarres une activité, développes une marque ou souhaites créer du contenu, nous construisons les prochaines étapes avec toi.</p>
+        <p class="signature">Orion — Chase Your Dreams.</p>
       </div>
-
-      <aside class="panel summary">
-        <span class="pill">Votre sélection</span>
-        <div class="total"><span id="optionsTotal">0,00 €</span></div>
-        <div id="optionsBreakdown"></div>
-        <p class="help">Le prix affiché est calculé à partir des options sélectionnées.</p>
-        <button id="toForm" class="btn primary" style="width:100%;margin-top:15px">Passer au formulaire →</button>
-        <a class="btn" style="width:100%;margin-top:10px" href="#accueil">Retour à l'accueil</a>
-      </aside>
-    </div>
-  </section>
-
-  <!-- 3. FORMULAIRE -->
-  <section id="formulaire" class="page">
-    <div class="section-head">
-      <div class="eyebrow">Étape 2 sur 3</div>
-      <h1 style="font-size:clamp(2rem,5vw,3.4rem)">Parlez-nous de votre projet</h1>
-      <p>Complétez les six parties. Les champs marqués d'un astérisque sont obligatoires.</p>
-    </div>
-
-    <div class="steps" aria-label="Parties du formulaire">
-      <div class="step current" data-step-label="0">A · Profil</div>
-      <div class="step" data-step-label="1">B · Projet</div>
-      <div class="step" data-step-label="2">C · État actuel</div>
-      <div class="step" data-step-label="3">D · Valeur</div>
-      <div class="step" data-step-label="4">E · Objectifs</div>
-      <div class="step" data-step-label="5">F · Finalisation</div>
-    </div>
-
-    <form id="projectForm">
-      <div class="form-section panel" data-form-step="0">
-        <h2>Partie A — Votre profil</h2>
-        <div class="form-grid">
-          <div>
-            <label class="field-label" for="firstName">Prénom *</label>
-            <input id="firstName" name="firstName" autocomplete="given-name" required>
-          </div>
-          <div>
-            <label class="field-label" for="lastName">Nom *</label>
-            <input id="lastName" name="lastName" autocomplete="family-name" required>
-          </div>
-          <div>
-            <label class="field-label" for="email">Adresse e-mail *</label>
-            <input id="email" name="email" type="email" autocomplete="email" required>
-          </div>
-          <div>
-            <label class="field-label" for="phone">Téléphone (facultatif)</label>
-            <input id="phone" name="phone" type="tel" autocomplete="tel">
-          </div>
-          <div>
-            <label class="field-label" for="discord">Nom d'utilisateur Discord</label>
-            <input id="discord" name="discord" placeholder="Ex. : pseudo">
-          </div>
-          <div>
-            <label class="field-label" for="hasTeam">Avez-vous une équipe ? *</label>
-            <select id="hasTeam" name="hasTeam" required>
-              <option value="">Sélectionner</option>
-              <option value="oui">Oui</option>
-              <option value="non">Non</option>
-            </select>
-          </div>
-          <div id="teamCountWrap" hidden>
-            <label class="field-label" for="teamCount">Nombre de personnes dans l'équipe *</label>
-            <input id="teamCount" name="teamCount" type="number" min="2" max="500">
-          </div>
-          <div class="full">
-            <label class="field-label" for="experience">Présentez votre expérience ou votre parcours *</label>
-            <textarea id="experience" name="experience" required></textarea>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-section panel" data-form-step="1" hidden>
-        <h2>Partie B — Présentation du projet</h2>
-        <div class="form-grid">
-          <div>
-            <label class="field-label" for="category">Domaine du projet *</label>
-            <select id="category" name="category" required>
-              <option value="">Sélectionner</option>
-              <option>Sport</option>
-              <option>Cinéma</option>
-              <option>Développement informatique</option>
-              <option>Création de contenu</option>
-              <option>Autre</option>
-            </select>
-          </div>
-          <div>
-            <label class="field-label" for="projectName">Nom du projet (facultatif)</label>
-            <input id="projectName" name="projectName">
-          </div>
-          <div class="full">
-            <label class="field-label" for="description">Décrivez votre projet en 3 à 5 lignes *</label>
-            <textarea id="description" name="description" required placeholder="Quel est le concept ? Que souhaitez-vous créer ?"></textarea>
-          </div>
-          <div class="full">
-            <label class="field-label" for="audience">À qui s'adresse votre projet ? *</label>
-            <textarea id="audience" name="audience" required></textarea>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-section panel" data-form-step="2" hidden>
-        <h2>Partie C — État actuel du projet</h2>
-        <label class="field-label" for="progress">Où en est votre projet ? *</label>
-        <select id="progress" name="progress" required>
-          <option value="">Sélectionner</option>
-          <option>Idée en cours de réflexion</option>
-          <option>Préparation et planification</option>
-          <option>Développement en cours</option>
-          <option>Projet déjà lancé</option>
-        </select>
-
-        <label class="field-label" for="users">Avez-vous déjà des utilisateurs ou des clients ? *</label>
-        <select id="users" name="users" required>
-          <option value="">Sélectionner</option>
-          <option>Oui</option>
-          <option>Non</option>
-          <option>Pas encore, mais prévu</option>
-        </select>
-
-        <label class="field-label" for="identity">Avez-vous déjà une identité visuelle ? *</label>
-        <select id="identity" name="identity" required>
-          <option value="">Sélectionner</option>
-          <option>Oui, elle est prête</option>
-          <option>Partiellement</option>
-          <option>Non, elle est à créer</option>
-        </select>
-      </div>
-
-      <div class="form-section panel" data-form-step="3" hidden>
-        <h2>Partie D — Valeur et différenciation</h2>
-        <label class="field-label" for="value">Quelle valeur votre projet apporte-t-il ? *</label>
-        <textarea id="value" name="value" required placeholder="Quel besoin satisfait-il ? Quel problème résout-il ?"></textarea>
-
-        <label class="field-label" for="competitors">Connaissez-vous des projets similaires ? Comment vous différenciez-vous ? *</label>
-        <textarea id="competitors" name="competitors" required></textarea>
-      </div>
-
-      <div class="form-section panel" data-form-step="4" hidden>
-        <h2>Partie E — Vos objectifs</h2>
-        <label class="field-label" for="goal6">Quels sont vos objectifs dans les 6 prochains mois ? *</label>
-        <textarea id="goal6" name="goal6" required></textarea>
-
-        <label class="field-label" for="goal12">Quels sont vos objectifs dans un an ? *</label>
-        <textarea id="goal12" name="goal12" required></textarea>
-
-        <label class="field-label" for="motivation">Pourquoi souhaitez-vous développer ce projet ? *</label>
-        <textarea id="motivation" name="motivation" required></textarea>
-      </div>
-
-      <div class="form-section panel" data-form-step="5" hidden>
-        <h2>Partie F — Finalisation</h2>
-        <label class="field-label" for="discovery">Comment avez-vous découvert Orion ?</label>
-        <select id="discovery" name="discovery">
-          <option value="">Sélectionner (facultatif)</option>
-          <option>Discord</option>
-          <option>YouTube</option>
-          <option>Instagram</option>
-          <option>TikTok</option>
-          <option>Recommandation</option>
-          <option>Autre</option>
-        </select>
-
-        <label class="field-label" for="extra">Autres informations utiles (facultatif)</label>
-        <textarea id="extra" name="extra"></textarea>
-
-        <label style="display:flex;gap:10px;align-items:flex-start;margin-top:18px">
-          <input type="checkbox" id="privacyConsent" required style="width:18px;height:18px;flex-shrink:0;margin-top:4px">
-          <span>J'ai lu la <a href="#confidentialite" target="_blank">politique de confidentialité</a> et je comprends comment mes informations seront utilisées. *</span>
-        </label>
-        <p class="help">Ce prototype conserve les réponses uniquement dans la page ouverte. Il ne les envoie pas automatiquement à Orion.</p>
-      </div>
-
-      <div class="form-nav">
-        <button type="button" id="previousStep" class="btn">← Précédent</button>
-        <button type="button" id="nextStep" class="btn primary">Étape suivante →</button>
-        <button type="submit" id="validateForm" class="btn primary" hidden>Valider et voir le paiement →</button>
-      </div>
-    </form>
-  </section>
-
-  <!-- 4. PAIEMENT -->
-  <section id="paiement" class="page">
-    <div class="section-head">
-      <div class="eyebrow">Étape 3 sur 3</div>
-      <h1 style="font-size:clamp(2rem,5vw,3.4rem)">Récapitulatif & paiement</h1>
-      <p>Vérifiez les options sélectionnées et le montant avant de poursuivre vers PayPal.</p>
-    </div>
-
-    <div class="options-layout">
-      <div class="panel">
-        <h2>Votre commande</h2>
-        <div id="paymentBreakdown"></div>
-        <div class="summary-line"><strong>Total à régler</strong><strong id="paymentTotal" class="price">0,00 €</strong></div>
-        <h3 style="margin-top:25px">Coordonnées de contact</h3>
-        <div id="contactSummary"></div>
-        <p class="help">Les réponses du formulaire ne sont pas envoyées avec le paiement dans ce prototype.</p>
-      </div>
-
-      <aside class="panel summary">
-        <span class="pill">Paiement externe</span>
-        <div class="total" id="payTotal">0,00 €</div>
-        <p>Le bouton ouvre PayPal dans un nouvel onglet. Remplacez le lien de démonstration dans le code par votre vrai lien PayPal.</p>
-        <div class="notice">
-          Ne saisissez jamais votre mot de passe PayPal sur ce site. Le paiement doit se faire directement sur le site officiel de PayPal.
-        </div>
-        <a id="paypalButton" class="btn primary" href="https://www.paypal.com/" target="_blank" rel="noopener" style="width:100%;margin-top:16px">Continuer vers PayPal ↗</a>
-        <p class="help">Lien de démonstration : aucun paiement ne peut être confirmé automatiquement par cette page statique.</p>
-        <button id="finishPayment" class="btn" style="width:100%;margin-top:10px">Retour à l'accueil</button>
-        <button id="editOrder" class="btn" style="width:100%;margin-top:10px">Modifier ma commande</button>
-      </aside>
-    </div>
-  </section>
-
-  <!-- CONFIDENTIALITÉ -->
-  <section id="confidentialite" class="page">
-    <div class="section-head">
-      <div class="eyebrow">Informations légales</div>
-      <h1 style="font-size:clamp(2rem,5vw,3.4rem)">Politique de confidentialité</h1>
-      <p>Cette page est un modèle à adapter avant la mise en ligne du site.</p>
-    </div>
-    <article class="panel">
-      <h2>1. Données recueillies</h2>
-      <p>Le formulaire de démonstration peut demander des informations de contact et des renseignements sur le projet, notamment un nom, une adresse e-mail et les réponses aux questions du formulaire.</p>
-
-      <h2>2. Finalité</h2>
-      <p>Dans une version opérationnelle, ces données devront être utilisées uniquement pour examiner la demande, communiquer avec la personne concernée et gérer les prestations sollicitées.</p>
-
-      <h2>3. Conservation et sécurité</h2>
-      <p>Cette démonstration HTML ne transmet ni n'enregistre les réponses sur un serveur. Avant le lancement réel, Orion devra définir une durée de conservation, limiter les accès aux données et mettre en place des mesures de sécurité adaptées.</p>
-
-      <h2>4. Paiement</h2>
-      <p>Le paiement doit être réalisé directement auprès du prestataire de paiement, par exemple PayPal. Ce site ne doit jamais demander le mot de passe PayPal de l'utilisateur ni les informations confidentielles de son compte.</p>
-
-      <h2>5. Vos droits</h2>
-      <p>Selon la réglementation applicable, vous pouvez disposer de droits d'accès, de rectification, d'effacement, d'opposition ou de limitation du traitement. Pour une mise en production, indiquez ici les coordonnées du responsable du traitement et la manière d'exercer ces droits.</p>
-
-      <h2>6. Contact</h2>
-      <p>Contact : remplacez ce texte par l'adresse e-mail officielle d'Orion avant la publication.</p>
-
-      <div class="notice">Important : ce modèle ne remplace pas une politique de confidentialité adaptée à votre activité. Complétez les coordonnées, les bases légales, les durées de conservation et les éventuels prestataires réellement utilisés avant de publier le site.</div>
-      <a href="#accueil" class="btn primary" style="margin-top:20px">Retour à l'accueil</a>
     </article>
+  </section>
+
+  <section class="section" id="services">
+    <div class="section-heading">
+      <p class="eyebrow">CE QUE NOUS PROPOSONS</p>
+      <h2>Les outils pour <span class="gradient-text">aller plus loin.</span></h2>
+      <p>Choisis les services qui correspondent à ton projet.</p>
+    </div>
+    <div class="cards">
+      <article class="card"><span class="card-icon">💻</span><h3>Création de site web</h3><p>Une présence en ligne pour présenter ton activité, tes services ou tes créations.</p><a class="text-link" href="#commande">Découvrir les options ↗</a></article>
+      <article class="card"><span class="card-icon">📸</span><h3>Contenu visuel</h3><p>Des photos et visuels pour mettre en valeur ton univers et tes projets.</p><a class="text-link" href="#commande">Découvrir les options ↗</a></article>
+      <article class="card"><span class="card-icon">🎬</span><h3>Vidéos</h3><p>Du contenu vidéo pour présenter ton activité et attirer l'attention.</p><a class="text-link" href="#commande">Découvrir les options ↗</a></article>
+      <article class="card"><span class="card-icon">🎨</span><h3>Identité visuelle</h3><p>Un logo et une direction visuelle pour rendre ton projet reconnaissable.</p><a class="text-link" href="#commande">Découvrir les options ↗</a></article>
+      <article class="card"><span class="card-icon">📱</span><h3>Réseaux sociaux</h3><p>Du contenu pensé pour communiquer avec ton audience.</p><a class="text-link" href="#commande">Découvrir les options ↗</a></article>
+      <article class="card"><span class="card-icon">🚀</span><h3>Accompagnement</h3><p>Un accompagnement pour organiser tes idées et définir les prochaines étapes.</p><a class="text-link" href="#commande">Découvrir les options ↗</a></article>
+    </div>
+  </section>
+
+  <section class="section" id="reseaux">
+    <div class="section-heading">
+      <p class="eyebrow">RESTONS CONNECTÉS</p>
+      <h2>Retrouve <span class="gradient-text">Orion.</span></h2>
+      <p>Ajoute ici les liens officiels de tes réseaux sociaux.</p>
+    </div>
+    <div class="cards">
+      <a class="card" href="https://instagram.com/" target="_blank" rel="noopener"><span class="card-icon">📸</span><h3>Instagram</h3><p>Actualités, visuels et coulisses.</p><span class="text-link">Visiter ↗</span></a>
+      <a class="card" href="https://tiktok.com/" target="_blank" rel="noopener"><span class="card-icon">🎵</span><h3>TikTok</h3><p>Vidéos et formats courts.</p><span class="text-link">Visiter ↗</span></a>
+      <a class="card" href="https://youtube.com/" target="_blank" rel="noopener"><span class="card-icon">▶️</span><h3>YouTube</h3><p>Découvre les contenus Orion.</p><span class="text-link">Visiter ↗</span></a>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <p class="eyebrow">PRÊT À COMMENCER ?</p>
+    <h2>Ton prochain projet commence <span class="gradient-text">ici.</span></h2>
+    <p>Choisis tes options et décris-nous ton projet.</p>
+    <a class="button primary" href="#commande">Créer mon projet ↗</a>
   </section>
 </main>
 
-<footer>
-  <div>© <span id="year"></span> Orion — Tous droits réservés.</div>
-  <p><a href="#accueil">Accueil</a><a href="#options">Options</a><a href="#confidentialite">Confidentialité</a></p>
+<!-- PAGE OPTIONS -->
+<main id="orderPage" class="page order-page">
+  <a class="back-link" href="#accueil">← Retour à l'accueil</a>
+  <div class="page-heading">
+    <p class="eyebrow">PERSONNALISE TON PROJET</p>
+    <h1>Choisis tes <span class="gradient-text">options.</span></h1>
+    <p>Sélectionne les options souhaitées. Le prix estimé se met à jour automatiquement.</p>
+  </div>
+
+  <div class="order-layout">
+    <div>
+      <section class="panel">
+        <h2>📸 Photos supplémentaires</h2>
+        <div class="option-row">
+          <div class="option-info"><strong>Photos pour ton site</strong><small>0,50 € par photo supplémentaire</small></div>
+          <span class="price" id="photosCost">0,00 €</span>
+          <div class="stepper"><button type="button" data-step="photos" data-delta="-1" aria-label="Retirer une photo">−</button><output id="photosValue">0</output><button type="button" data-step="photos" data-delta="1" aria-label="Ajouter une photo">+</button></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>🎬 Vidéos pour ton site</h2>
+        <div class="option-row">
+          <div class="option-info"><strong>Vidéos intégrées au site</strong><small>10 € par vidéo supplémentaire</small></div>
+          <span class="price" id="siteVideosCost">0,00 €</span>
+          <div class="stepper"><button type="button" data-step="siteVideos" data-delta="-1" aria-label="Retirer une vidéo">−</button><output id="siteVideosValue">0</output><button type="button" data-step="siteVideos" data-delta="1" aria-label="Ajouter une vidéo">+</button></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>🌐 Nom de domaine</h2>
+        <div class="option-row">
+          <div class="option-info"><strong>Choisis ton domaine</strong><small>Prix indicatif, à confirmer avant commande</small>
+            <select class="domain-select" id="domain">
+              <option value="0">Pas de domaine supplémentaire — 0 €</option>
+              <option value="10">.fr — 10 €</option>
+              <option value="15">.com — 15 €</option>
+              <option value="20">Autre extension — 20 €</option>
+            </select>
+          </div>
+          <span class="price" id="domainCost">0,00 €</span>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>🎨 Identité et accompagnement</h2>
+        <label class="checkbox-row"><input type="checkbox" id="logo"><span><strong>Création d'un logo</strong><br><small class="muted">Option supplémentaire — 25 €</small></span><strong class="price">25 €</strong></label>
+        <label class="checkbox-row"><input type="checkbox" id="coaching"><span><strong>Coaching d'influenceur</strong><br><small class="muted">Accompagnement — 25 €</small></span><strong class="price">25 €</strong></label>
+      </section>
+
+      <section class="panel">
+        <h2>📱 Vidéos promotionnelles</h2>
+        <div class="option-row">
+          <div class="option-info"><strong>Vidéos pour les réseaux sociaux</strong><small>5 € par vidéo supplémentaire</small></div>
+          <span class="price" id="socialVideosCost">0,00 €</span>
+          <div class="stepper"><button type="button" data-step="socialVideos" data-delta="-1" aria-label="Retirer une vidéo promotionnelle">−</button><output id="socialVideosValue">0</output><button type="button" data-step="socialVideos" data-delta="1" aria-label="Ajouter une vidéo promotionnelle">+</button></div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="panel summary-panel">
+      <h2>🧾 Ton récapitulatif</h2>
+      <div class="summary-line"><span>Photos</span><span id="summaryPhotos">0,00 €</span></div>
+      <div class="summary-line"><span>Vidéos du site</span><span id="summarySiteVideos">0,00 €</span></div>
+      <div class="summary-line"><span>Domaine</span><span id="summaryDomain">0,00 €</span></div>
+      <div class="summary-line"><span>Logo</span><span id="summaryLogo">0,00 €</span></div>
+      <div class="summary-line"><span>Vidéos promotionnelles</span><span id="summarySocialVideos">0,00 €</span></div>
+      <div class="summary-line"><span>Coaching</span><span id="summaryCoaching">0,00 €</span></div>
+      <div class="summary-total"><span>Total estimé</span><strong id="total">0,00 €</strong></div>
+      <p class="summary-note">Prix indicatif. Les prestations et le montant final devront être confirmés avant paiement.</p>
+      <button type="button" class="button primary full-button" id="orderButton">Continuer vers le formulaire →</button>
+      <a href="#accueil" class="button secondary full-button">Retour à l'accueil</a>
+    </aside>
+  </div>
+</main>
+
+<!-- PAGE FORMULAIRE -->
+<section id="formulaire" class="page form-page">
+  <a class="back-link" href="#commande">← Retour aux options</a>
+  <div class="page-heading">
+    <p class="eyebrow">DÉCRIS-NOUS TON PROJET</p>
+    <h1>Le formulaire <span class="gradient-text">Orion.</span></h1>
+    <p>Complète les six étapes pour nous donner les informations nécessaires à ta demande.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step-label current" data-step-label>1. Contact</div>
+    <div class="step-label" data-step-label>2. Projet</div>
+    <div class="step-label" data-step-label>3. Objectifs</div>
+    <div class="step-label" data-step-label>4. Identité</div>
+    <div class="step-label" data-step-label>5. Budget</div>
+    <div class="step-label" data-step-label>6. Validation</div>
+  </div>
+
+  <form id="projectForm">
+    <section class="form-section" data-form-step>
+      <h2>Étape 1 — Tes coordonnées</h2>
+      <div class="field-grid">
+        <div class="field"><label for="firstName">Prénom *</label><input id="firstName" name="firstName" autocomplete="given-name" required></div>
+        <div class="field"><label for="lastName">Nom *</label><input id="lastName" name="lastName" autocomplete="family-name" required></div>
+        <div class="field"><label for="email">Adresse e-mail *</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="phone">Téléphone (facultatif)</label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
+        <div class="field full"><label for="country">Pays</label><input id="country" name="country" autocomplete="country-name"></div>
+      </div>
+    </section>
+
+    <section class="form-section" data-form-step hidden>
+      <h2>Étape 2 — Ton projet</h2>
+      <div class="field-grid">
+        <div class="field"><label for="projectName">Nom du projet *</label><input id="projectName" name="projectName" required></div>
+        <div class="field"><label for="projectType">Type de projet *</label><select id="projectType" name="projectType" required><option value="">Choisir...</option><option>Entreprise</option><option>Marque personnelle</option><option>Création de contenu</option><option>Boutique en ligne</option><option>Projet personnel</option><option>Autre</option></select></div>
+        <div class="field full"><label for="projectDescription">Décris ton projet *</label><textarea id="projectDescription" name="projectDescription" required placeholder="Que souhaites-tu créer ?"></textarea></div>
+        <div class="field full"><label for="existingSite">Site ou réseaux existants (facultatif)</label><input id="existingSite" name="existingSite" type="url" placeholder="https://..."></div>
+      </div>
+    </section>
+
+    <section class="form-section" data-form-step hidden>
+      <h2>Étape 3 — Tes objectifs</h2>
+      <div class="field-grid">
+        <div class="field"><label for="mainGoal">Objectif principal *</label><select id="mainGoal" name="mainGoal" required><option value="">Choisir...</option><option>Présenter mon activité</option><option>Développer ma visibilité</option><option>Vendre des produits ou services</option><option>Créer une communauté</option><option>Autre</option></select></div>
+        <div class="field"><label for="targetAudience">Public cible *</label><input id="targetAudience" name="targetAudience" required placeholder="À qui s'adresse ton projet ?"></div>
+        <div class="field"><label for="hasTeam">Travailles-tu en équipe ? *</label><select id="hasTeam" name="hasTeam" required><option value="">Choisir...</option><option value="non">Non</option><option value="oui">Oui</option></select></div>
+        <div class="field" id="teamCountWrap" hidden><label for="teamCount">Nombre de personnes</label><input id="teamCount" name="teamCount" type="number" min="1"></div>
+        <div class="field full"><label for="inspiration">Exemples ou inspirations (facultatif)</label><textarea id="inspiration" name="inspiration"></textarea></div>
+      </div>
+    </section>
+
+    <section class="form-section" data-form-step hidden>
+      <h2>Étape 4 — Ton identité visuelle</h2>
+      <div class="field-grid">
+        <div class="field"><label for="brandColors">Couleurs souhaitées</label><input id="brandColors" name="brandColors" placeholder="Ex. bleu, noir, blanc"></div>
+        <div class="field"><label for="style">Style recherché *</label><select id="style" name="style" required><option value="">Choisir...</option><option>Moderne</option><option>Minimaliste</option><option>Élégant</option><option>Futuriste</option><option>Coloré</option><option>Je n'ai pas encore d'idée</option></select></div>
+        <div class="field full"><label for="brandDetails">Autres détails (facultatif)</label><textarea id="brandDetails" name="brandDetails" placeholder="Logo existant, couleurs, inspirations..."></textarea></div>
+      </div>
+    </section>
+
+    <section class="form-section" data-form-step hidden>
+      <h2>Étape 5 — Budget et délais</h2>
+      <div class="field-grid">
+        <div class="field"><label for="budget">Budget envisagé *</label><select id="budget" name="budget" required><option value="">Choisir...</option><option>Moins de 50 €</option><option>50 à 100 €</option><option>100 à 250 €</option><option>250 à 500 €</option><option>Plus de 500 €</option><option>À définir ensemble</option></select></div>
+        <div class="field"><label for="deadline">Date souhaitée *</label><input id="deadline" name="deadline" type="date" required></div>
+        <div class="field full"><label for="constraints">Contraintes ou précisions (facultatif)</label><textarea id="constraints" name="constraints"></textarea></div>
+      </div>
+    </section>
+
+    <section class="form-section" data-form-step hidden>
+      <h2>Étape 6 — Validation</h2>
+      <div class="field-grid">
+        <div class="field full"><label for="finalNotes">Un dernier mot sur ton projet ?</label><textarea id="finalNotes" name="finalNotes"></textarea></div>
+        <div class="field full">
+          <label class="checkbox-row"><input id="privacyConsent" type="checkbox" required><span>J'accepte que mes informations soient utilisées pour traiter ma demande. *</span></label>
+          <p class="muted">Les champs du formulaire ne sont pas envoyés sur un serveur par cette démo HTML. Prévois une solution sécurisée avant la mise en ligne.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="form-actions">
+      <button type="button" class="button secondary" id="previousStep">← Précédent</button>
+      <button type="button" class="button primary" id="nextStep">Suivant →</button>
+      <button type="submit" class="button primary" id="validateForm" hidden>Valider et voir le paiement →</button>
+    </div>
+    <div id="formNotice" class="notice" role="status"></div>
+  </form>
+</section>
+
+<!-- PAGE PAIEMENT -->
+<section id="paiement" class="page payment-page">
+  <a class="back-link" href="#formulaire">← Retour au formulaire</a>
+  <div class="page-heading">
+    <p class="eyebrow">RÉCAPITULATIF DE COMMANDE</p>
+    <h1>Dernière étape : <span class="gradient-text">le paiement.</span></h1>
+    <p>Vérifie le montant et tes coordonnées avant de continuer.</p>
+  </div>
+  <div class="order-layout">
+    <div class="panel">
+      <h2>🧾 Détail de ta commande</h2>
+      <div id="paymentBreakdown"></div>
+      <div class="payment-total"><span>Total estimé</span><strong id="paymentTotal">0,00 €</strong></div>
+      <p class="summary-note">Le montant affiché est calculé à partir des options sélectionnées. Confirme les prix avec Orion avant le paiement.</p>
+    </div>
+    <aside class="panel">
+      <h2>👤 Tes coordonnées</h2>
+      <div id="contactSummary"></div>
+      <p class="summary-note">Vérifie que ton adresse e-mail est correcte.</p>
+      <a class="button primary full-button" id="paypalButton" href="https://paypal.me/" target="_blank" rel="noopener">Continuer sur PayPal ↗</a>
+      <button type="button" class="button secondary full-button" id="editOrder">Modifier les options</button>
+      <button type="button" class="button secondary full-button" id="finishPayment">Retour à l'accueil</button>
+      <div class="notice show">Le paiement n'est pas vérifié automatiquement par cette page. Tu dois configurer ton vrai lien de paiement.</div>
+    </aside>
+  </div>
+</section>
+
+<!-- PAGE CONFIDENTIALITÉ -->
+<section id="confidentialite" class="page privacy-page">
+  <a class="back-link" href="#accueil">← Retour à l'accueil</a>
+  <article class="panel privacy-card">
+    <p class="eyebrow">INFORMATIONS LÉGALES</p>
+    <h1>Politique de <span class="gradient-text">confidentialité.</span></h1>
+    <h2>1. Données collectées</h2>
+    <p>Le formulaire peut demander des informations telles que le nom, l'adresse e-mail et les détails du projet.</p>
+    <h2>2. Utilisation des données</h2>
+    <p>Dans une version opérationnelle, ces données devront servir uniquement à examiner la demande, communiquer avec la personne et gérer les prestations sollicitées.</p>
+    <h2>3. Conservation et sécurité</h2>
+    <p>Cette démonstration HTML ne transmet ni n'enregistre les réponses sur un serveur. Avant la mise en ligne, définis une durée de conservation et des mesures de sécurité adaptées.</p>
+    <h2>4. Paiement</h2>
+    <p>Le paiement doit être réalisé directement auprès du prestataire de paiement. Ne demande jamais le mot de passe PayPal ni les informations confidentielles du compte d'un utilisateur.</p>
+    <h2>5. Vos droits</h2>
+    <p>Complète cette page avec les coordonnées du responsable du traitement et les informations nécessaires à l'exercice des droits applicables.</p>
+    <h2>6. Contact</h2>
+    <p>Remplace ce texte par l'adresse e-mail officielle d'Orion avant la publication.</p>
+    <a class="button primary" href="#accueil" style="margin-top:20px">Retour à l'accueil</a>
+  </article>
+</section>
+
+<footer class="footer">
+  <a href="#accueil"><strong>Orion 🌌</strong></a>
+  <p>Chase Your Dreams.</p>
+  <p>© <span id="year"></span> Orion. Tous droits réservés.</p>
+  <p><a href="#confidentialite">Confidentialité</a></p>
 </footer>
 
 <script>
-/*
-  CONFIGURATION PAYPAL
-  Remplacez ce lien d'exemple par votre lien PayPal.me réel.
-  Exemple fictif : https://paypal.me/VotreNomPayPal
-  Un lien PayPal.me ne suffit pas à vérifier le paiement ni à
-  déclencher un retour automatique sécurisé vers ce site.
-*/
-const PAYPAL_BASE_URL = "https://paypal.me/OrionExemple";
+const $ = id => document.getElementById(id);
+$('year').textContent = new Date().getFullYear();
 
-const euro = amount => new Intl.NumberFormat("fr-FR", {
-  style: "currency", currency: "EUR"
-}).format(amount);
+/* Navigation */
+const routes = ['accueil','commande','formulaire','paiement','confidentialite'];
 
-const get = id => document.getElementById(id);
+function navigate() {
+  let route = location.hash.slice(1) || 'accueil';
+  if (!routes.includes(route)) route = 'accueil';
 
-function selectedOptions() {
-  const photos = Math.min(10, Math.max(0, Number(get("photos").value) || 0));
-  const videos = Math.min(5, Math.max(0, Number(get("videos").value) || 0));
-  const domainPrice = Number(get("domain").value) || 0;
-  const promo = Math.min(5, Math.max(0, Number(get("promo").value) || 0));
-  const logo = get("logo").checked;
-  const coaching = get("coaching").checked;
-  const domainName = get("domain").selectedOptions[0].textContent;
+  $('homePage').classList.toggle('active',route === 'accueil');
+  $('orderPage').classList.toggle('active',route === 'commande');
+  $('formulaire').classList.toggle('active',route === 'formulaire');
+  $('paiement').classList.toggle('active',route === 'paiement');
+  $('confidentialite').classList.toggle('active',route === 'confidentialite');
 
-  const lines = [
-    { label: "Formule de base (site, 1 photo, 1 vidéo)", price: 0 },
-    { label: `Photos supplémentaires (${photos})`, price: photos * 0.5 },
-    { label: `Vidéos intégrées supplémentaires (${videos})`, price: videos * 10 },
-    { label: `Domaine : ${domainName}`, price: domainPrice },
-    { label: "Création du logo", price: logo ? 25 : 0, included: logo },
-    { label: `Vidéos promotionnelles (${promo})`, price: promo * 5 },
-    { label: "Accompagnement influenceurs", price: coaching ? 25 : 0, included: coaching }
-  ];
+  $('mainNav').style.display = route === 'accueil' ? 'flex' : 'none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+window.addEventListener('hashchange',navigate);
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click',() => {
+    const target = link.getAttribute('href').slice(1);
+    if (['presentation','services','reseaux'].includes(target)) {
+      if (location.hash !== '#accueil') {
+        setTimeout(() => $(target)?.scrollIntoView({behavior:'smooth'}),100);
+      }
+    }
+  });
+});
+
+/* Options et calcul du prix */
+const quantities = {photos:0,siteVideos:0,socialVideos:0};
+const limits = {photos:10,siteVideos:5,socialVideos:5};
+const prices = {photos:.50,siteVideos:10,socialVideos:5};
+const euro = amount => amount.toLocaleString('fr-FR',{
+  style:'currency',currency:'EUR'
+});
+
+function calculateTotal() {
+  const photos = quantities.photos * prices.photos;
+  const siteVideos = quantities.siteVideos * prices.siteVideos;
+  const socialVideos = quantities.socialVideos * prices.socialVideos;
+  const domain = Number($('domain').value);
+  const logo = $('logo').checked ? 25 : 0;
+  const coaching = $('coaching').checked ? 25 : 0;
+  const total = photos + siteVideos + socialVideos + domain + logo + coaching;
+
+  $('photosValue').textContent = quantities.photos;
+  $('siteVideosValue').textContent = quantities.siteVideos;
+  $('socialVideosValue').textContent = quantities.socialVideos;
+
+  $('photosCost').textContent = euro(photos);
+  $('siteVideosCost').textContent = euro(siteVideos);
+  $('socialVideosCost').textContent = euro(socialVideos);
+  $('domainCost').textContent = euro(domain);
+
+  $('summaryPhotos').textContent = euro(photos);
+  $('summarySiteVideos').textContent = euro(siteVideos);
+  $('summarySocialVideos').textContent = euro(socialVideos);
+  $('summaryDomain').textContent = euro(domain);
+  $('summaryLogo').textContent = euro(logo);
+  $('summaryCoaching').textContent = euro(coaching);
+  $('total').textContent = euro(total);
 
   return {
-    lines: lines.filter(line => line.price > 0 || line.included || line.label.startsWith("Formule")),
-    total: lines.reduce((sum, line) => sum + line.price, 0)
+    total,photos,siteVideos,socialVideos,domain,logo,coaching,
+    domainName:$('domain').selectedOptions[0].textContent,
+    lines:[
+      ['Site web de base',0],
+      [`Photos supplémentaires (${quantities.photos})`,photos],
+      [`Vidéos pour le site (${quantities.siteVideos})`,siteVideos],
+      [$('domain').selectedOptions[0].textContent,domain],
+      ['Création du logo',logo],
+      [`Vidéos promotionnelles (${quantities.socialVideos})`,socialVideos],
+      ['Coaching d’influenceur',coaching]
+    ]
   };
 }
 
-function renderLines(target, order) {
-  target.innerHTML = "";
-  order.lines.forEach(line => {
-    const row = document.createElement("div");
-    row.className = "summary-line";
-    const label = document.createElement("span");
-    const price = document.createElement("strong");
-    label.textContent = line.label;
-    price.textContent = euro(line.price);
-    row.append(label, price);
-    target.appendChild(row);
+document.querySelectorAll('[data-step]').forEach(button => {
+  button.addEventListener('click',() => {
+    const name = button.dataset.step;
+    const delta = Number(button.dataset.delta);
+    quantities[name] = Math.max(0,Math.min(limits[name],quantities[name] + delta));
+    calculateTotal();
   });
-}
-
-function updateOptions() {
-  const order = selectedOptions();
-  get("optionsTotal").textContent = euro(order.total);
-  renderLines(get("optionsBreakdown"), order);
-}
-
-["photos", "videos", "domain", "promo", "logo", "coaching"].forEach(id => {
-  get(id).addEventListener("input", updateOptions);
-  get(id).addEventListener("change", updateOptions);
 });
 
-get("hasTeam").addEventListener("change", () => {
-  const hasTeam = get("hasTeam").value === "oui";
-  get("teamCountWrap").hidden = !hasTeam;
-  get("teamCount").required = hasTeam;
-  if (!hasTeam) get("teamCount").value = "";
+['domain','logo','coaching'].forEach(id => {
+  $(id).addEventListener('change',calculateTotal);
 });
 
+/* Formulaire en six étapes */
 let currentStep = 0;
-const formSteps = [...document.querySelectorAll("[data-form-step]")];
-const stepLabels = [...document.querySelectorAll("[data-step-label]")];
+const formSteps = [...document.querySelectorAll('[data-form-step]')];
+const stepLabels = [...document.querySelectorAll('[data-step-label]')];
 
 function showFormStep(step) {
-  currentStep = Math.max(0, Math.min(5, step));
-  formSteps.forEach((section, index) => section.hidden = index !== currentStep);
-  stepLabels.forEach((label, index) => label.classList.toggle("current", index === currentStep));
-  get("previousStep").disabled = currentStep === 0;
-  get("nextStep").hidden = currentStep === 5;
-  get("validateForm").hidden = currentStep !== 5;
-  get("formulaire").scrollIntoView({ behavior: "smooth", block: "start" });
+  currentStep = Math.max(0,Math.min(formSteps.length - 1,step));
+  formSteps.forEach((section,index) => {
+    section.hidden = index !== currentStep;
+  });
+  stepLabels.forEach((label,index) => {
+    label.classList.toggle('current',index === currentStep);
+  });
+  $('previousStep').disabled = currentStep === 0;
+  $('nextStep').hidden = currentStep === formSteps.length - 1;
+  $('validateForm').hidden = currentStep !== formSteps.length - 1;
 }
 
 function validateCurrentStep() {
-  const section = formSteps[currentStep];
-  const fields = [...section.querySelectorAll("input, select, textarea")];
+  const fields = formSteps[currentStep].querySelectorAll('input,select,textarea');
   for (const field of fields) {
-    if (field.disabled || field.type === "checkbox" && !field.required) continue;
     if (!field.checkValidity()) {
       field.reportValidity();
       field.focus();
@@ -737,82 +651,91 @@ function validateCurrentStep() {
   return true;
 }
 
-get("previousStep").addEventListener("click", () => showFormStep(currentStep - 1));
-get("nextStep").addEventListener("click", () => {
+$('hasTeam').addEventListener('change',() => {
+  const hasTeam = $('hasTeam').value === 'oui';
+  $('teamCountWrap').hidden = !hasTeam;
+  $('teamCount').required = hasTeam;
+  if (!hasTeam) $('teamCount').value = '';
+});
+
+$('previousStep').addEventListener('click',() => {
+  showFormStep(currentStep - 1);
+});
+
+$('nextStep').addEventListener('click',() => {
   if (validateCurrentStep()) showFormStep(currentStep + 1);
 });
 
-get("toForm").addEventListener("click", () => {
+$('orderButton').addEventListener('click',() => {
+  calculateTotal();
   showFormStep(0);
-  location.hash = "formulaire";
+  location.hash = 'formulaire';
 });
 
+/* Paiement et récapitulatif */
+const PAYPAL_BASE_URL = 'https://paypal.me/OrionExemple';
+// Remplace cette URL par ton vrai lien PayPal.me.
+
 function showPayment() {
-  const order = selectedOptions();
-  renderLines(get("paymentBreakdown"), order);
-  get("paymentTotal").textContent = euro(order.total);
-  get("payTotal").textContent = euro(order.total);
+  const order = calculateTotal();
+  $('paymentBreakdown').replaceChildren();
 
-  const firstName = get("firstName").value.trim();
-  const lastName = get("lastName").value.trim();
-  const email = get("email").value.trim();
-  get("contactSummary").replaceChildren();
+  order.lines.forEach(([labelText,amount]) => {
+    const row = document.createElement('div');
+    row.className = 'payment-line';
 
-  [
-    ["Nom", `${firstName} ${lastName}`.trim()],
-    ["E-mail", email]
-  ].forEach(([labelText, valueText]) => {
-    const row = document.createElement("div");
-    row.className = "summary-line";
-    const label = document.createElement("span");
-    const value = document.createElement("strong");
+    const label = document.createElement('span');
     label.textContent = labelText;
-    value.textContent = valueText || "—";
-    row.append(label, value);
-    get("contactSummary").appendChild(row);
+
+    const price = document.createElement('strong');
+    price.textContent = euro(amount);
+
+    row.append(label,price);
+    $('paymentBreakdown').appendChild(row);
   });
 
-  /*
-    Démonstration seulement. Le montant dans l'URL PayPal.me est
-    une demande de montant, pas une preuve de paiement.
-  */
-  const paypalBase = PAYPAL_BASE_URL.replace(/\/+$/, "");
-  const paypalUrl = `${paypalBase}/${order.total.toFixed(2)}`;
-  get("paypalButton").href = paypalUrl;
+  $('paymentTotal').textContent = euro(order.total);
+
+  $('contactSummary').replaceChildren();
+  const fullName = `${$('firstName').value.trim()} ${$('lastName').value.trim()}`.trim();
+
+  [['Nom',fullName],['E-mail',$('email').value.trim()]].forEach(([labelText,valueText]) => {
+    const row = document.createElement('div');
+    row.className = 'payment-line';
+
+    const label = document.createElement('span');
+    label.textContent = labelText;
+
+    const value = document.createElement('strong');
+    value.textContent = valueText || '—';
+
+    row.append(label,value);
+    $('contactSummary').appendChild(row);
+  });
+
+  const paypalBase = PAYPAL_BASE_URL.replace(/\/+$/,'');
+  $('paypalButton').href = paypalBase + '/' + order.total.toFixed(2);
 }
 
-get("projectForm").addEventListener("submit", event => {
+$('projectForm').addEventListener('submit',event => {
   event.preventDefault();
   if (!validateCurrentStep()) return;
   showPayment();
-  location.hash = "paiement";
+  location.hash = 'paiement';
 });
 
-get("finishPayment").addEventListener("click", () => {
-  location.hash = "accueil";
+$('editOrder').addEventListener('click',() => {
+  location.hash = 'commande';
 });
 
-get("editOrder").addEventListener("click", () => {
-  location.hash = "options";
+$('finishPayment').addEventListener('click',() => {
+  location.hash = 'accueil';
 });
 
-function navigate() {
-  const pageId = (location.hash || "#accueil").slice(1);
-  const allowed = ["accueil", "options", "formulaire", "paiement", "confidentialite"];
-  const destination = allowed.includes(pageId) ? pageId : "accueil";
-
-  document.querySelectorAll(".page").forEach(page => {
-    page.classList.toggle("active", page.id === destination);
-  });
-
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-window.addEventListener("hashchange", navigate);
-get("year").textContent = new Date().getFullYear();
-updateOptions();
 showFormStep(0);
+calculateTotal();
 navigate();
 </script>
+
 </body>
 </html>
